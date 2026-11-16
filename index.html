@@ -154,7 +154,7 @@
           </button>
           <button type="button" onclick="switchMainPage('pageManual')" id="navPageManual"
             class="px-4 py-2 rounded-lg text-xs md:text-sm font-bold transition flex items-center gap-2 bg-blue-900/80 dark:bg-slate-800 text-blue-100 hover:bg-blue-800 border border-blue-800 dark:border-slate-700">
-            คู่มือการใช้งาน
+            📖 คู่มือการใช้งาน
           </button>
         </nav>
       </div>
@@ -274,7 +274,7 @@
           <div class="flex items-center gap-2 w-full lg:w-auto">
             <input type="text" id="searchInput" oninput="renderTable()" placeholder="ค้นหาผู้ส่ง, ผู้รับ, เรื่อง, ด่วน..."
               class="w-full lg:w-64 bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-1.5 text-sm text-slate-800 dark:text-slate-100 focus:outline-none focus:border-blue-800">
-            <button onclick="loadAllData()" id="refreshBtn"
+            <button onclick="loadAllData(true)" id="refreshBtn"
               class="whitespace-nowrap text-xs font-semibold bg-white dark:bg-slate-800 hover:bg-slate-100 border border-slate-300 dark:border-slate-700 px-3.5 py-2 rounded-lg text-slate-700 dark:text-slate-200 transition">
               ปรับปรุงข้อมูล
             </button>
@@ -430,7 +430,7 @@
           <div class="flex items-center gap-2 w-full sm:w-auto">
             <input type="text" id="ledgerSearchInput" oninput="renderTrackingPage()" placeholder="ค้นหาที่, เลขที่, จาก, ถึง, เรื่อง..."
               class="w-full sm:w-56 bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-1 text-xs text-slate-800 dark:text-slate-100 focus:outline-none">
-            <button onclick="loadAllData()" class="whitespace-nowrap text-xs font-semibold bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 px-3 py-1.5 rounded-lg hover:bg-slate-100">
+            <button onclick="loadAllData(true)" class="whitespace-nowrap text-xs font-semibold bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 px-3 py-1.5 rounded-lg hover:bg-slate-100">
               🔄 รีเฟรช
             </button>
           </div>
@@ -460,7 +460,6 @@
     <!-- ===================================================================== -->
     <main id="pageManual" class="hidden max-w-5xl mx-auto px-4 py-6 md:px-6 space-y-6">
 
-      <!-- หัวข้อคู่มือ + ปุ่มพิมพ์ PDF -->
       <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5 md:p-6 shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <span class="bg-amber-100 dark:bg-amber-500/20 text-amber-900 dark:text-amber-300 text-xs font-bold px-2.5 py-1 rounded">คู่มือปฏิบัติงานเจ้าหน้าที่</span>
@@ -469,11 +468,10 @@
         </div>
         <button type="button" onclick="window.print()"
           class="no-print whitespace-nowrap bg-blue-900 dark:bg-amber-600 hover:bg-blue-800 text-white text-xs font-bold px-4 py-2.5 rounded-lg transition shadow-sm flex items-center gap-2">
-          พิมพ์คู่มือ / บันทึกเป็น PDF
+          🖨️ พิมพ์คู่มือ / บันทึกเป็น PDF
         </button>
       </div>
 
-      <!-- ส่วนที่ 1: การสมัครและเข้าสู่ระบบ -->
       <section class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5 md:p-6 shadow-sm space-y-3">
         <h3 class="text-base font-bold text-blue-950 dark:text-amber-400 flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-2.5">
           <span class="w-6 h-6 rounded-full bg-blue-900 text-white text-xs flex items-center justify-center font-bold">1</span>
@@ -496,7 +494,6 @@
         </div>
       </section>
 
-      <!-- ส่วนที่ 2: คู่มือหน้า 1 (รับ-ส่งหนังสือราชการ) -->
       <section class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5 md:p-6 shadow-sm space-y-4">
         <h3 class="text-base font-bold text-blue-950 dark:text-amber-400 flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-2.5">
           <span class="w-6 h-6 rounded-full bg-amber-500 text-blue-950 text-xs flex items-center justify-center font-bold">2</span>
@@ -517,13 +514,13 @@
             <ul class="list-disc pl-5 space-y-1">
               <li>เมื่อมีหนังสือส่งถึงท่าน จะมี <strong>แถบแจ้งเตือนสีทอง</strong> และตัวเลขแจ้งเตือนที่แท็บ <strong>📥 หนังสือถึงฉัน</strong></li>
               <li>คลิกที่ชื่อไฟล์ <strong>📄 เปิดดูเอกสาร</strong> เพื่อเปิดอ่านหรือดาวน์โหลดไฟล์</li>
-              <li>กดปุ่ม <strong>"ลงรับหนังสือ"</strong> ด้านขวาสุด เพื่อยืนยันการรับเรื่อง (สถานะจะเปลี่ยนเป็น <em>ลงรับแล้ว</em>)</li>
+              <li>กดปุ่ม <strong>"ลงรับหนังสือ"</strong> ด้านขวาสุด เพื่อยืนยันการรับเรื่อง (สถานะจะเปลี่ยนเป็น <em>ลงรับแล้ว</em> ทันที)</li>
+              <li>หากบันทึกผิดพลาด สามารถกดปุ่ม <strong>"ลบ"</strong> เพื่อนำรายการออกจากทะเบียนได้</li>
             </ul>
           </div>
         </div>
       </section>
 
-      <!-- ส่วนที่ 3: คู่มือหน้า 2 (สมุดทะเบียนรับ) -->
       <section class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5 md:p-6 shadow-sm space-y-4">
         <h3 class="text-base font-bold text-blue-950 dark:text-amber-400 flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-2.5">
           <span class="w-6 h-6 rounded-full bg-emerald-700 text-white text-xs flex items-center justify-center font-bold">3</span>
@@ -572,7 +569,7 @@
   </div>
 
   <script>
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzmVoGakOm70q449_zBsVdtTCuehIWVokptbz0lu3HWsptLgV46PkSQLcvqw4_S76Wd8g/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx1d7XWPCqFoCLxg6LANEzMJXaGBG7P0SVIB4b0TNyhlQV7yzhQbZn-s8a5qPSi5YInuw/exec';
     let allDocuments = [];
     let allUsers = [];
     let allLedger = [];
@@ -742,7 +739,7 @@
         : currentUser.fullName;
 
       loadAllData(true);
-      setInterval(() => loadAllData(false), 60000);
+      setInterval(() => loadAllData(false), 10000);
     }
 
     function logout() {
@@ -830,10 +827,10 @@
 
     async function loadAllData(isFirstLoad = false) {
       const refreshBtn = document.getElementById('refreshBtn');
-      if (refreshBtn) refreshBtn.innerText = 'กำลังโหลด...';
+      if (refreshBtn && isFirstLoad) refreshBtn.innerText = 'กำลังโหลด...';
 
       try {
-        const res = await fetch(SCRIPT_URL);
+        const res = await fetch(`${SCRIPT_URL}?t=${Date.now()}`);
         const json = await res.json();
         allDocuments = json.data || [];
         allUsers = json.users || [];
@@ -845,7 +842,9 @@
         renderTrackingPage();
         suggestNextSeqNo();
       } catch (err) {
-        document.getElementById('docList').innerHTML = '<tr><td colspan="5" class="p-8 text-center text-red-600">ไม่สามารถโหลดข้อมูลได้</td></tr>';
+        if (isFirstLoad) {
+          document.getElementById('docList').innerHTML = '<tr><td colspan="5" class="p-8 text-center text-red-600">ไม่สามารถโหลดข้อมูลได้</td></tr>';
+        }
       } finally {
         if (refreshBtn) refreshBtn.innerText = 'ปรับปรุงข้อมูล';
       }
@@ -971,11 +970,14 @@
                   : 'bg-amber-50 dark:bg-amber-500/10 text-amber-800 dark:text-amber-300 border border-amber-300'
               }">${isReceived ? 'ลงรับแล้ว' : 'รอลงรับหนังสือ'}</span>
             </td>
-            <td class="py-3.5 px-4 text-right whitespace-nowrap">
+            <td class="py-3.5 px-4 text-right whitespace-nowrap space-x-1.5">
               ${!isReceived
-                ? `<button onclick="markReceived(${item.rowId}, this)" class="bg-blue-900 dark:bg-amber-600 hover:bg-blue-800 text-white text-xs font-semibold px-3.5 py-1.5 rounded-lg transition shadow-sm">ลงรับหนังสือ</button>`
-                : `<span class="text-xs font-semibold text-emerald-700 dark:text-emerald-400">✓ ดำเนินการแล้ว</span>`
+                ? `<button onclick="markReceived(${item.rowId})" class="bg-blue-900 dark:bg-amber-600 hover:bg-blue-800 text-white text-xs font-semibold px-3.5 py-1.5 rounded-lg transition shadow-sm">ลงรับหนังสือ</button>`
+                : `<span class="text-xs font-semibold text-emerald-700 dark:text-emerald-400 mr-1">✓ ดำเนินการแล้ว</span>`
               }
+              <button onclick="deleteDocument(${item.rowId})" title="ลบรายการนี้" class="text-xs text-rose-600 hover:text-rose-800 px-2 py-1.5 rounded hover:bg-rose-50 dark:hover:bg-rose-950/40 font-semibold">
+                ลบ
+              </button>
             </td>
           </tr>
         `;
@@ -1225,7 +1227,7 @@
         });
         const result = await res.json();
         if (result.status === 'success') {
-          const refreshRes = await fetch(SCRIPT_URL);
+          const refreshRes = await fetch(`${SCRIPT_URL}?t=${Date.now()}`);
           const refreshJson = await refreshRes.json();
           allLedger = refreshJson.ledger || allLedger;
           renderTrackingPage();
@@ -1297,7 +1299,7 @@
           renderTrackingPage();
           alert(result.message);
         } else {
-          const refreshRes = await fetch(SCRIPT_URL);
+          const refreshRes = await fetch(`${SCRIPT_URL}?t=${Date.now()}`);
           const refreshJson = await refreshRes.json();
           allLedger = refreshJson.ledger || allLedger;
           renderTrackingPage();
@@ -1366,9 +1368,15 @@
       reader.readAsDataURL(file);
     });
 
-    async function markReceived(rowId, btnElement) {
-      btnElement.disabled = true;
-      btnElement.innerText = 'กำลังลงรับ...';
+    async function markReceived(rowId) {
+      const target = allDocuments.find(d => d.rowId === rowId);
+      if (!target) return;
+      const prevStatus = target.status;
+
+      target.status = 'รับเรื่องแล้ว';
+      checkIncomingNotifications(false);
+      renderTable();
+
       try {
         const res = await fetch(SCRIPT_URL, {
           method: 'POST',
@@ -1381,17 +1389,51 @@
           })
         });
         const result = await res.json();
-        if (result.status === 'success') {
-          await loadAllData(false);
-        } else {
+        if (result.status !== 'success') {
+          target.status = prevStatus;
+          checkIncomingNotifications(false);
+          renderTable();
           alert(result.message);
-          btnElement.disabled = false;
-          btnElement.innerText = 'ลงรับหนังสือ';
         }
       } catch (err) {
-        alert('เกิดข้อผิดพลาด');
-        btnElement.disabled = false;
-        btnElement.innerText = 'ลงรับหนังสือ';
+        target.status = prevStatus;
+        checkIncomingNotifications(false);
+        renderTable();
+        alert('ไม่สามารถบันทึกสถานะได้ กรุณาลองใหม่อีกครั้ง');
+      }
+    }
+
+    async function deleteDocument(rowId) {
+      if (!confirm('ยืนยันลบรายการหนังสือฉบับนี้ออกจากทะเบียน?')) return;
+      const backup = [...allDocuments];
+      allDocuments = allDocuments.filter(d => d.rowId !== rowId);
+      checkIncomingNotifications(false);
+      renderTable();
+
+      try {
+        const res = await fetch(SCRIPT_URL, {
+          method: 'POST',
+          body: JSON.stringify({
+            action: 'deleteDocument',
+            username: currentUser.username,
+            password: currentUser.password,
+            rowId: rowId
+          })
+        });
+        const result = await res.json();
+        if (result.status !== 'success') {
+          allDocuments = backup;
+          checkIncomingNotifications(false);
+          renderTable();
+          alert(result.message);
+        } else {
+          await loadAllData(false);
+        }
+      } catch (err) {
+        allDocuments = backup;
+        checkIncomingNotifications(false);
+        renderTable();
+        alert('ไม่สามารถลบรายการได้ กรุณาลองใหม่อีกครั้ง');
       }
     }
 
