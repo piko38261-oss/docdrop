@@ -1,150 +1,461 @@
 <!DOCTYPE html>
-<html lang="th" class="dark">
+<html lang="th">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DocDrop • ระบบรับ-ส่งเอกสารภายใน</title>
+  <title>ระบบรับ-ส่งหนังสือราชการและเอกสารอิเล็กทรอนิกส์ • จังหวัดสุรินทร์</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = { darkMode: 'class' };
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'IBM Plex Sans Thai', sans-serif; }
+    body { font-family: 'Sarabun', sans-serif; }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen p-4 md:p-8">
+<body class="bg-slate-100 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen transition-colors duration-200">
 
-  <div class="max-w-5xl mx-auto space-y-6">
-    <!-- Header & PIN -->
-    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-800 pb-5">
-      <div>
-        <div class="flex items-center gap-2.5">
-          <span class="bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 px-2.5 py-0.5 rounded-md text-xs font-semibold">INTERNAL</span>
-          <h1 class="text-2xl font-bold text-slate-100 tracking-tight">DocDrop • ระบบรับ-ส่งเอกสาร</h1>
+  <!-- หน้าต่างเข้าสู่ระบบ / ลงทะเบียน (Auth Screen) -->
+  <div id="loginScreen" class="min-h-screen flex items-center justify-center p-4 bg-gradient-to-b from-blue-950 to-slate-900">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl max-w-md w-full overflow-hidden">
+      <div class="bg-blue-950 text-white p-6 text-center border-b-4 border-amber-500">
+        <div class="w-14 h-14 rounded-xl bg-amber-500/20 border border-amber-400/50 flex items-center justify-center mx-auto mb-3">
+          <svg class="w-8 h-8 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
         </div>
-        <p class="text-sm text-slate-400 mt-1">ส่งไฟล์เอกสารข้ามแผนกและติดตามสถานะได้ทันที ไม่ต้องเดินส่งเอกสาร</p>
-      </div>
-      
-      <div class="flex items-center gap-2 bg-slate-900 border border-slate-800 px-3 py-2 rounded-xl">
-        <span class="text-xs text-slate-400">รหัส PIN ออฟฟิศ:</span>
-        <input type="password" id="pinInput" value="1234" maxlength="6" placeholder="PIN"
-          class="bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1 text-sm w-20 text-center text-indigo-400 font-semibold focus:outline-none focus:border-indigo-500">
-      </div>
-    </div>
-
-    <!-- ฟอร์มส่งเอกสารใหม่ -->
-    <form id="uploadForm" class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 md:p-6 space-y-4 shadow-xl">
-      <div class="flex items-center justify-between">
-        <h2 class="font-semibold text-base text-slate-200 flex items-center gap-2">
-          <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-          ส่งเอกสารใหม่
-        </h2>
-        <span class="text-xs text-slate-500">รองรับไฟล์เอกสารและรูปภาพ (สูงสุด ~20MB)</span>
+        <span class="bg-amber-500 text-blue-950 text-[11px] font-bold px-2.5 py-0.5 rounded tracking-wide">ระบบสารบรรณอิเล็กทรอนิกส์</span>
+        <h1 class="text-xl font-bold mt-2">ระบบรับ-ส่งหนังสือราชการ</h1>
+        <p class="text-xs text-blue-200 mt-1">ส่วนราชการจังหวัดสุรินทร์ • สำหรับเจ้าหน้าที่ภายใน</p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label class="block text-xs text-slate-400 mb-1">ชื่อผู้ส่ง *</label>
-          <input type="text" id="sender" placeholder="เช่น นนท์, ฝ่ายธุรการ" required
-            class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-slate-100 placeholder-slate-600 focus:outline-none focus:border-indigo-500">
-        </div>
-        <div>
-          <label class="block text-xs text-slate-400 mb-1">ส่งถึงแผนก / ผู้รับ *</label>
-          <input type="text" id="department" placeholder="เช่น บัญชี, การเงิน, สำนักงาน" required
-            class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-slate-100 placeholder-slate-600 focus:outline-none focus:border-indigo-500">
-        </div>
-      </div>
-
-      <!-- ส่วนเลือกหมวดเอกสาร + เพิ่มหมวดหมู่ใหม่ + รายละเอียด -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <div class="flex items-center justify-between mb-1">
-            <label class="block text-xs text-slate-400">หมวดเอกสาร *</label>
-            <button type="button" onclick="toggleAddCategory()" id="toggleCatBtn"
-              class="text-xs text-indigo-400 hover:text-indigo-300 font-medium transition">
-              + เพิ่มหมวดหมู่ใหม่
-            </button>
-          </div>
-          
-          <select id="categorySelect" required
-            class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-indigo-500">
-          </select>
-
-          <div id="newCategoryBox" class="hidden mt-2 flex gap-2">
-            <input type="text" id="newCategoryInput" placeholder="พิมพ์ชื่อหมวดหมู่ใหม่..."
-              class="w-full bg-slate-950 border border-indigo-500/50 rounded-lg px-3 py-1.5 text-xs text-slate-100 placeholder-slate-500 focus:outline-none">
-            <button type="button" onclick="addNewCategory()"
-              class="whitespace-nowrap bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium px-3 py-1.5 rounded-lg transition">
-              บันทึกหมวด
-            </button>
-          </div>
-        </div>
-
-        <div>
-          <label class="block text-xs text-slate-400 mb-1">รายละเอียดเพิ่มเติม (ถ้ามี)</label>
-          <input type="text" id="titleDetail" placeholder="เช่น เรื่องขออนุมัติ..., เลขที่หนังสือ..."
-            class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-slate-100 placeholder-slate-600 focus:outline-none focus:border-indigo-500">
-        </div>
-      </div>
-
-      <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-1">
-        <input type="file" id="fileInput" required
-          class="block w-full text-sm text-slate-400 bg-slate-950 border border-slate-800 rounded-xl p-1.5 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-indigo-600 file:text-white hover:file:bg-indigo-500 cursor-pointer">
-        
-        <button type="submit" id="submitBtn"
-          class="sm:w-44 whitespace-nowrap bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-700 disabled:cursor-not-allowed text-white font-semibold px-6 py-3 rounded-xl text-sm transition shadow-lg shadow-emerald-950/50">
-          ส่งเอกสารทันที
+      <!-- แท็บสลับ เข้าสู่ระบบ / ลงทะเบียน -->
+      <div class="grid grid-cols-2 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950">
+        <button type="button" onclick="switchAuthTab('login')" id="authTabLogin"
+          class="py-3 text-sm font-bold text-blue-950 dark:text-amber-400 border-b-2 border-blue-900 dark:border-amber-500 bg-white dark:bg-slate-900 transition">
+          เข้าสู่ระบบ
+        </button>
+        <button type="button" onclick="switchAuthTab('register')" id="authTabRegister"
+          class="py-3 text-sm font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-700 transition">
+          ลงทะเบียนเจ้าหน้าที่ใหม่
         </button>
       </div>
-    </form>
 
-    <!-- ตารางรายการเอกสาร -->
-    <div class="bg-slate-900/90 border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
-      <div class="p-4 md:p-5 border-b border-slate-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-        <div class="flex items-center gap-3">
-          <h2 class="font-semibold text-slate-200">รายการเอกสารทั้งหมด</h2>
-          <span id="pendingBadge" class="hidden bg-amber-500/10 text-amber-400 border border-amber-500/20 text-xs px-2.5 py-0.5 rounded-full font-medium">
-            รอรับเรื่อง 0 รายการ
-          </span>
+      <!-- ฟอร์มเข้าสู่ระบบ -->
+      <form id="loginForm" autocomplete="off" class="p-6 space-y-4">
+        <div>
+          <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1">ชื่อผู้ใช้งาน (Username) หรือ อีเมล</label>
+          <input type="text" id="loginUsername" required autocomplete="new-password" placeholder="กรอกชื่อผู้ใช้งานของท่าน"
+            class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-3.5 py-2.5 text-sm text-slate-800 dark:text-slate-100 focus:outline-none focus:border-blue-800 dark:focus:border-amber-500">
         </div>
-
-        <div class="flex items-center gap-2 w-full sm:w-auto">
-          <input type="text" id="searchInput" oninput="renderTable()" placeholder="ค้นหาชื่อ, แผนก, หมวดเอกสาร..."
-            class="w-full sm:w-56 bg-slate-950 border border-slate-800 rounded-lg px-3 py-1.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500">
-          <button onclick="loadDocuments()" id="refreshBtn"
-            class="whitespace-nowrap text-xs bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg text-slate-300 transition">
-            รีเฟรช
-          </button>
+        <div>
+          <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1">รหัสผ่าน (Password)</label>
+          <input type="password" id="loginPassword" required autocomplete="new-password" placeholder="••••••••"
+            class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-3.5 py-2.5 text-sm text-slate-800 dark:text-slate-100 focus:outline-none focus:border-blue-800 dark:focus:border-amber-500">
         </div>
-      </div>
+        <button type="submit" id="loginBtn"
+          class="w-full bg-blue-900 hover:bg-blue-800 disabled:bg-slate-400 text-white font-bold py-2.5 rounded-lg text-sm transition shadow-md">
+          เข้าสู่ระบบ
+        </button>
+      </form>
 
-      <div class="overflow-x-auto">
-        <table class="w-full text-left text-sm">
-          <thead class="bg-slate-950/70 text-slate-400 text-xs uppercase border-b border-slate-800">
-            <tr>
-              <th class="p-3.5">วัน-เวลา</th>
-              <th class="p-3.5">ผู้ส่ง ➔ ผู้รับ</th>
-              <th class="p-3.5">หมวด / รายละเอียดเอกสาร</th>
-              <th class="p-3.5">สถานะ</th>
-              <th class="p-3.5 text-right">การจัดการ</th>
-            </tr>
-          </thead>
-          <tbody id="docList" class="divide-y divide-slate-800/80">
-            <tr><td colspan="5" class="p-8 text-center text-slate-500">กำลังโหลดรายการเอกสาร...</td></tr>
-          </tbody>
-        </table>
-      </div>
+      <!-- ฟอร์มลงทะเบียนเจ้าหน้าที่ใหม่ -->
+      <form id="registerForm" autocomplete="off" class="hidden p-6 space-y-3.5">
+        <div>
+          <label class="block text-xs font-bold text-amber-700 dark:text-amber-400 mb-1">รหัสยืนยันหน่วยงาน (PIN) <span class="text-red-600">*</span></label>
+          <input type="password" id="regOfficePin" required autocomplete="new-password" placeholder="กรอกรหัสหน่วยงาน (สอบถามผู้ดูแลระบบ)"
+            class="w-full bg-amber-50/50 dark:bg-slate-950 border border-amber-300 dark:border-amber-500/50 rounded-lg px-3.5 py-2 text-sm text-slate-800 dark:text-slate-100 focus:outline-none focus:border-amber-500">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">ยศ / ชื่อ - นามสกุล <span class="text-red-600">*</span></label>
+          <input type="text" id="regFullName" required placeholder="เช่น นายสมชาย ใจดี"
+            class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-3.5 py-2 text-sm text-slate-800 dark:text-slate-100 focus:outline-none focus:border-blue-800">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">กลุ่มงาน / ฝ่าย / ตำแหน่ง <span class="text-red-600">*</span></label>
+          <input type="text" id="regDepartment" required placeholder="เช่น กลุ่มงานสารบรรณ, ฝ่ายการเงิน"
+            class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-3.5 py-2 text-sm text-slate-800 dark:text-slate-100 focus:outline-none focus:border-blue-800">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">อีเมล (สำหรับรับแจ้งเตือนหนังสือเข้าอัตโนมัติ)</label>
+          <input type="email" id="regEmail" placeholder="example@gmail.com (ไม่บังคับ)"
+            class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-3.5 py-2 text-sm text-slate-800 dark:text-slate-100 focus:outline-none focus:border-blue-800">
+        </div>
+        <div class="grid grid-cols-2 gap-3 pt-1">
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">ตั้งชื่อผู้ใช้งาน <span class="text-red-600">*</span></label>
+            <input type="text" id="regUsername" required autocomplete="new-password" placeholder="ภาษาอังกฤษ"
+              class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-800 dark:text-slate-100 focus:outline-none focus:border-blue-800">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">ตั้งรหัสผ่าน <span class="text-red-600">*</span></label>
+            <input type="password" id="regPassword" required autocomplete="new-password" placeholder="••••••••"
+              class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-800 dark:text-slate-100 focus:outline-none focus:border-blue-800">
+          </div>
+        </div>
+        <button type="submit" id="registerBtn"
+          class="w-full bg-emerald-700 hover:bg-emerald-600 disabled:bg-slate-400 text-white font-bold py-2.5 rounded-lg text-sm transition shadow-md mt-2">
+          บันทึกข้อมูลและเข้าสู่ระบบ
+        </button>
+      </form>
     </div>
   </div>
 
-  <script>
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby5Kx17xp2YFTgOPX_SPOgThbPU26PhT0UWpc7jf56Mplp6EG7039Qfhi5lymG1sLiHPQ/exec';
-    let allDocuments = [];
+  <!-- หน้าหลักระบบสารบรรณ (App Screen) -->
+  <div id="appScreen" class="hidden">
+    <header class="bg-blue-950 dark:bg-slate-900 text-white border-b-4 border-amber-500 shadow-md">
+      <div class="max-w-6xl mx-auto px-4 py-4 md:px-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div class="flex items-center gap-3.5">
+          <div class="w-12 h-12 rounded-lg bg-amber-500/15 border border-amber-400/40 flex items-center justify-center shrink-0">
+            <svg class="w-7 h-7 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="bg-amber-500 text-blue-950 text-[11px] font-bold px-2 py-0.5 rounded tracking-wide">ระบบสารบรรณอิเล็กทรอนิกส์</span>
+              <span class="text-xs text-blue-200 dark:text-slate-300 hidden sm:inline">• ส่วนราชการจังหวัดสุรินทร์</span>
+            </div>
+            <h1 class="text-lg md:text-xl font-bold text-white mt-0.5 tracking-tight">ระบบรับ-ส่งหนังสือราชการและเอกสารภายใน</h1>
+          </div>
+        </div>
 
-    const DEFAULT_CATEGORIES = ['สัสดี', 'ผู้ว่าราชการจังหวัด', 'หนังสือราชการทั่วไป', 'คำสั่ง / ประกาศ'];
-    
-    function initCategories() {
+        <div class="flex flex-wrap items-center gap-2.5 self-end md:self-auto">
+          <div class="bg-blue-900/90 dark:bg-slate-800 border border-blue-800 dark:border-slate-700 px-3 py-1.5 rounded-lg text-right">
+            <div id="userFullNameDisplay" class="text-xs font-bold text-amber-300"></div>
+            <div id="userDeptDisplay" class="text-[11px] text-blue-200 dark:text-slate-400"></div>
+          </div>
+
+          <button type="button" onclick="toggleTheme()" id="themeToggleBtn"
+            class="flex items-center gap-1.5 bg-blue-900/80 dark:bg-slate-800 hover:bg-blue-800 dark:hover:bg-slate-700 border border-blue-700 dark:border-slate-700 px-3 py-2 rounded-lg text-xs font-semibold text-blue-100 dark:text-amber-300 transition">
+            <span id="themeIcon">🌙</span>
+            <span id="themeText" class="hidden sm:inline">โหมดมืด</span>
+          </button>
+
+          <button type="button" onclick="logout()"
+            class="bg-rose-600/90 hover:bg-rose-600 text-white px-3 py-2 rounded-lg text-xs font-semibold transition">
+            ออกจากระบบ
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 py-6 md:px-6 space-y-6">
+
+      <!-- แถบแจ้งเตือนหนังสือส่งถึงฉัน -->
+      <div id="myInboxAlert" class="hidden bg-amber-50 dark:bg-amber-950/40 border-l-4 border-amber-500 rounded-r-xl p-4 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <span class="text-2xl">🔔</span>
+          <div>
+            <h3 class="font-bold text-amber-950 dark:text-amber-200 text-sm" id="myInboxAlertTitle">มีหนังสือราชการส่งถึงท่านรอลงรับ</h3>
+            <p class="text-xs text-amber-800 dark:text-amber-300/80">กรุณาตรวจสอบและกดปุ่ม "ลงรับหนังสือ" เพื่อยืนยันการรับเอกสาร</p>
+          </div>
+        </div>
+        <button onclick="setFilterTab('mine')"
+          class="whitespace-nowrap bg-amber-500 hover:bg-amber-600 text-blue-950 font-bold text-xs px-4 py-2 rounded-lg transition shadow-sm">
+          เปิดดูหนังสือถึงฉันทันที
+        </button>
+      </div>
+
+      <!-- แบบฟอร์มส่งหนังสือ / เอกสาร -->
+      <section class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-sm overflow-hidden">
+        <div class="bg-slate-50 dark:bg-slate-800/60 px-5 py-3.5 border-b border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-2">
+          <h2 class="font-bold text-blue-950 dark:text-slate-100 text-base flex items-center gap-2">
+            <span class="w-1.5 h-5 bg-blue-900 dark:bg-amber-500 rounded-full"></span>
+            แบบฟอร์มลงทะเบียนส่งหนังสือ / เอกสารราชการ
+          </h2>
+          <span class="text-xs text-slate-500 dark:text-slate-400">แจ้งเตือนไปยังผู้รับอัตโนมัติทันทีที่ส่ง</span>
+        </div>
+
+        <form id="uploadForm" class="p-5 md:p-6 space-y-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1">ส่วนราชการ / ชื่อผู้ส่ง</label>
+              <input type="text" id="sender" readonly
+                class="w-full bg-slate-100 dark:bg-slate-800/80 border border-slate-300 dark:border-slate-700 rounded-lg px-3.5 py-2 text-sm font-semibold text-slate-700 dark:text-amber-300 cursor-not-allowed">
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1">ส่งตรงถึงผู้รับ / หน่วยงานปลายทาง <span class="text-red-600 dark:text-rose-400">*</span></label>
+              <select id="recipientSelect" required
+                class="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-3.5 py-2 text-sm text-slate-800 dark:text-slate-100 focus:outline-none focus:border-blue-800 dark:focus:border-amber-500">
+                <option value="">-- เลือกรายชื่อผู้รับในระบบ --</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+            <div class="md:col-span-4">
+              <div class="flex items-center justify-between mb-1">
+                <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300">ประเภทหนังสือ <span class="text-red-600 dark:text-rose-400">*</span></label>
+                <button type="button" onclick="toggleAddCategory()"
+                  class="text-xs text-blue-800 dark:text-amber-400 hover:text-blue-600 font-semibold underline underline-offset-2">
+                  + เพิ่มประเภท
+                </button>
+              </div>
+              <select id="categorySelect" required
+                class="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-3.5 py-2 text-sm text-slate-800 dark:text-slate-100 focus:outline-none focus:border-blue-800 dark:focus:border-amber-500">
+              </select>
+              <div id="newCategoryBox" class="hidden mt-2 flex gap-2">
+                <input type="text" id="newCategoryInput" placeholder="ระบุชื่อประเภทใหม่..."
+                  class="w-full bg-slate-50 dark:bg-slate-950 border border-blue-400 rounded-lg px-3 py-1.5 text-sm text-slate-800 dark:text-slate-100 focus:outline-none">
+                <button type="button" onclick="addNewCategory()"
+                  class="whitespace-nowrap bg-blue-900 dark:bg-amber-600 text-white text-xs font-semibold px-3 py-1.5 rounded-lg">
+                  บันทึก
+                </button>
+              </div>
+            </div>
+
+            <div class="md:col-span-3">
+              <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1">ชั้นความเร็ว <span class="text-red-600 dark:text-rose-400">*</span></label>
+              <select id="urgencySelect" required
+                class="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-3.5 py-2 text-sm font-semibold text-slate-800 dark:text-slate-100 focus:outline-none focus:border-blue-800 dark:focus:border-amber-500">
+                <option value="ปกติ">ปกติ</option>
+                <option value="ด่วน">ด่วน</option>
+                <option value="ด่วนมาก">ด่วนมาก</option>
+                <option value="ด่วนที่สุด">🔴 ด่วนที่สุด</option>
+              </select>
+            </div>
+
+            <div class="md:col-span-5">
+              <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1">เลขที่หนังสือ / เรื่อง (ถ้ามี)</label>
+              <input type="text" id="titleDetail" placeholder="เช่น ที่ สร 0017.1/ว 123 เรื่อง ขอส่งสำเนา..."
+                class="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-3.5 py-2 text-sm text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:border-blue-800 dark:focus:border-amber-500">
+            </div>
+          </div>
+
+          <div class="pt-2 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+            <div class="flex-1">
+              <input type="file" id="fileInput" required
+                class="block w-full text-sm text-slate-600 dark:text-slate-300 bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg p-1.5 file:mr-4 file:py-1.5 file:px-4 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-blue-900 dark:file:bg-amber-600 file:text-white cursor-pointer">
+            </div>
+            <button type="submit" id="submitBtn"
+              class="sm:w-48 whitespace-nowrap bg-blue-900 dark:bg-amber-600 hover:bg-blue-800 dark:hover:bg-amber-500 disabled:bg-slate-400 text-white font-semibold px-6 py-2.5 rounded-lg text-sm transition shadow-sm flex items-center justify-center gap-2">
+              บันทึกและส่งหนังสือ
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- ทะเบียนคุมหนังสือรับ-ส่ง + แท็บกรองกล่องขาเข้า -->
+      <section class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-sm overflow-hidden">
+        <div class="bg-slate-50 dark:bg-slate-800/60 px-5 py-3.5 border-b border-slate-200 dark:border-slate-800 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-3">
+          <div class="flex flex-wrap items-center gap-2">
+            <button type="button" onclick="setFilterTab('mine')" id="tabMine"
+              class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-blue-900 text-white">
+              📥 หนังสือถึงฉัน
+              <span id="myPendingCountBadge" class="hidden bg-red-500 text-white text-[11px] px-1.5 py-0.2 rounded-full">0</span>
+            </button>
+            <button type="button" onclick="setFilterTab('all')" id="tabAll"
+              class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700">
+              📋 ทะเบียนทั้งหมด
+            </button>
+          </div>
+
+          <div class="flex items-center gap-2 w-full lg:w-auto">
+            <input type="text" id="searchInput" oninput="renderTable()" placeholder="ค้นหาผู้ส่ง, ผู้รับ, เรื่อง, ด่วน..."
+              class="w-full lg:w-64 bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-1.5 text-sm text-slate-800 dark:text-slate-100 focus:outline-none focus:border-blue-800">
+            <button onclick="loadDocuments()" id="refreshBtn"
+              class="whitespace-nowrap text-xs font-semibold bg-white dark:bg-slate-800 hover:bg-slate-100 border border-slate-300 dark:border-slate-700 px-3.5 py-2 rounded-lg text-slate-700 dark:text-slate-200 transition">
+              ปรับปรุงข้อมูล
+            </button>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-sm border-collapse">
+            <thead class="bg-blue-950 dark:bg-slate-950 text-white dark:text-slate-300 text-xs font-semibold tracking-wider">
+              <tr>
+                <th class="py-3 px-4 border-b border-blue-900 dark:border-slate-800">วัน / เวลาที่ส่ง</th>
+                <th class="py-3 px-4 border-b border-blue-900 dark:border-slate-800">ผู้ส่ง ➔ ผู้รับ</th>
+                <th class="py-3 px-4 border-b border-blue-900 dark:border-slate-800">ชั้นความเร็ว / ประเภท / เรื่อง</th>
+                <th class="py-3 px-4 border-b border-blue-900 dark:border-slate-800 text-center">สถานะ</th>
+                <th class="py-3 px-4 border-b border-blue-900 dark:border-slate-800 text-right">การดำเนินการ</th>
+              </tr>
+            </thead>
+            <tbody id="docList" class="divide-y divide-slate-200 dark:divide-slate-800">
+              <tr><td colspan="5" class="p-8 text-center text-slate-500">กำลังโหลดข้อมูล...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyZ2qufQMpBPMCyxTM9MHzBaU-dPS2_sjV2GVT6aUqLc1E5KfivNFyt4ri21FSQbhs1fg/exec';
+    let allDocuments = [];
+    let allUsers = [];
+    let currentUser = null;
+    let currentFilterTab = 'mine';
+    let lastKnownPendingIds = new Set();
+
+    const DEFAULT_CATEGORIES = [
+      'สัสดี', 'ผู้ว่าราชการจังหวัด', 'สำนักงานจังหวัดสุรินทร์',
+      'ที่ทำการปกครองจังหวัดสุรินทร์', 'หนังสือราชการทั่วไป', 'คำสั่ง / ประกาศ'
+    ];
+
+    function initApp() {
+      const savedTheme = localStorage.getItem('docdrop_gov_theme');
+      if (savedTheme === 'dark') {
+        document.documentElement.classList.add('dark');
+        updateThemeButton(true);
+      }
+
       const saved = JSON.parse(localStorage.getItem('docdrop_categories') || 'null');
-      const categories = saved || [...DEFAULT_CATEGORIES];
-      renderCategoryOptions(categories);
+      renderCategoryOptions(saved || [...DEFAULT_CATEGORIES]);
+
+      const savedSession = JSON.parse(localStorage.getItem('docdrop_gov_session') || 'null');
+      if (savedSession && savedSession.username && savedSession.password) {
+        currentUser = savedSession;
+        showAppScreen();
+      }
+    }
+
+    function switchAuthTab(mode) {
+      const loginForm = document.getElementById('loginForm');
+      const registerForm = document.getElementById('registerForm');
+      const tabLogin = document.getElementById('authTabLogin');
+      const tabRegister = document.getElementById('authTabRegister');
+
+      if (mode === 'login') {
+        loginForm.classList.remove('hidden');
+        registerForm.classList.add('hidden');
+        tabLogin.className = 'py-3 text-sm font-bold text-blue-950 dark:text-amber-400 border-b-2 border-blue-900 dark:border-amber-500 bg-white dark:bg-slate-900 transition';
+        tabRegister.className = 'py-3 text-sm font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-700 transition';
+      } else {
+        loginForm.classList.add('hidden');
+        registerForm.classList.remove('hidden');
+        tabRegister.className = 'py-3 text-sm font-bold text-blue-950 dark:text-amber-400 border-b-2 border-blue-900 dark:border-amber-500 bg-white dark:bg-slate-900 transition';
+        tabLogin.className = 'py-3 text-sm font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-700 transition';
+      }
+    }
+
+    // เข้าสู่ระบบ
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const username = document.getElementById('loginUsername').value.trim();
+      const password = document.getElementById('loginPassword').value.trim();
+      const btn = document.getElementById('loginBtn');
+      btn.disabled = true;
+      btn.innerText = 'กำลังตรวจสอบสิทธิ์...';
+
+      try {
+        const res = await fetch(SCRIPT_URL, {
+          method: 'POST',
+          body: JSON.stringify({ action: 'login', username, password })
+        });
+        const result = await res.json();
+        if (result.status === 'success') {
+          currentUser = { ...result.user, password };
+          localStorage.setItem('docdrop_gov_session', JSON.stringify(currentUser));
+          requestDesktopNotification();
+          showAppScreen();
+        } else {
+          alert(result.message);
+        }
+      } catch (err) {
+        alert('ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้ กรุณาลองใหม่อีกครั้ง');
+      } finally {
+        btn.disabled = false;
+        btn.innerText = 'เข้าสู่ระบบ';
+      }
+    });
+
+    // ลงทะเบียนเจ้าหน้าที่ใหม่
+    document.getElementById('registerForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const officePin = document.getElementById('regOfficePin').value.trim();
+      const fullName = document.getElementById('regFullName').value.trim();
+      const department = document.getElementById('regDepartment').value.trim();
+      const email = document.getElementById('regEmail').value.trim();
+      const username = document.getElementById('regUsername').value.trim();
+      const password = document.getElementById('regPassword').value.trim();
+
+      const btn = document.getElementById('registerBtn');
+      btn.disabled = true;
+      btn.innerText = 'กำลังบันทึกข้อมูล...';
+
+      try {
+        const res = await fetch(SCRIPT_URL, {
+          method: 'POST',
+          body: JSON.stringify({
+            action: 'register',
+            officePin,
+            fullName,
+            department,
+            email,
+            username,
+            password
+          })
+        });
+        const result = await res.json();
+        if (result.status === 'success') {
+          alert('ลงทะเบียนเจ้าหน้าที่เรียบร้อยแล้ว ระบบกำลังพาเข้าสู่หน้าหลัก');
+          currentUser = { ...result.user, password };
+          localStorage.setItem('docdrop_gov_session', JSON.stringify(currentUser));
+          requestDesktopNotification();
+          showAppScreen();
+        } else {
+          alert(result.message);
+        }
+      } catch (err) {
+        alert('ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้ กรุณาลองใหม่อีกครั้ง');
+      } finally {
+        btn.disabled = false;
+        btn.innerText = 'บันทึกข้อมูลและเข้าสู่ระบบ';
+      }
+    });
+
+    function showAppScreen() {
+      document.getElementById('loginScreen').classList.add('hidden');
+      document.getElementById('appScreen').classList.remove('hidden');
+      document.getElementById('userFullNameDisplay').innerText = currentUser.fullName;
+      document.getElementById('userDeptDisplay').innerText = currentUser.department || 'เจ้าหน้าที่ในระบบ';
+      document.getElementById('sender').value = currentUser.department
+        ? `${currentUser.fullName} (${currentUser.department})`
+        : currentUser.fullName;
+
+      loadDocuments(true);
+      setInterval(() => loadDocuments(false), 45000);
+    }
+
+    function logout() {
+      localStorage.removeItem('docdrop_gov_session');
+      currentUser = null;
+      document.getElementById('appScreen').classList.add('hidden');
+      document.getElementById('loginScreen').classList.remove('hidden');
+      document.getElementById('loginPassword').value = '';
+    }
+
+    function requestDesktopNotification() {
+      if ('Notification' in window && Notification.permission === 'default') {
+        Notification.requestPermission();
+      }
+    }
+
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('docdrop_gov_theme', isDark ? 'dark' : 'light');
+      updateThemeButton(isDark);
+    }
+
+    function updateThemeButton(isDark) {
+      document.getElementById('themeIcon').innerText = isDark ? '☀️' : '🌙';
+      document.getElementById('themeText').innerText = isDark ? 'โหมดสว่าง' : 'โหมดมืด';
+    }
+
+    function setFilterTab(tab) {
+      currentFilterTab = tab;
+      const tabMine = document.getElementById('tabMine');
+      const tabAll = document.getElementById('tabAll');
+      if (tab === 'mine') {
+        tabMine.className = 'px-3.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-blue-900 dark:bg-amber-600 text-white';
+        tabAll.className = 'px-3.5 py-1.5 rounded-lg text-xs font-bold transition bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700';
+      } else {
+        tabAll.className = 'px-3.5 py-1.5 rounded-lg text-xs font-bold transition bg-blue-900 dark:bg-amber-600 text-white';
+        tabMine.className = 'px-3.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700';
+      }
+      renderTable();
     }
 
     function renderCategoryOptions(categories, selectedValue = '') {
@@ -155,32 +466,43 @@
     }
 
     function toggleAddCategory() {
-      const box = document.getElementById('newCategoryBox');
-      const input = document.getElementById('newCategoryInput');
-      box.classList.toggle('hidden');
-      if (!box.classList.contains('hidden')) {
-        input.focus();
-      }
+      document.getElementById('newCategoryBox').classList.toggle('hidden');
     }
 
     function addNewCategory() {
       const input = document.getElementById('newCategoryInput');
       const newCat = input.value.trim();
       if (!newCat) return;
-
       const saved = JSON.parse(localStorage.getItem('docdrop_categories') || 'null') || [...DEFAULT_CATEGORIES];
       if (!saved.includes(newCat)) {
         saved.push(newCat);
         localStorage.setItem('docdrop_categories', JSON.stringify(saved));
       }
-
       renderCategoryOptions(saved, newCat);
       input.value = '';
       document.getElementById('newCategoryBox').classList.add('hidden');
     }
 
-    async function loadDocuments() {
-      const tbody = document.getElementById('docList');
+    function populateRecipientDropdown(users) {
+      const select = document.getElementById('recipientSelect');
+      const currentVal = select.value;
+      const options = users.map(u => {
+        const label = u.department ? `${u.fullName} (${u.department})` : u.fullName;
+        return `<option value="${escapeHTML(label)}" data-username="${escapeHTML(u.username)}">${escapeHTML(label)}</option>`;
+      }).join('');
+      select.innerHTML = `<option value="">-- เลือกรายชื่อผู้รับในระบบ --</option>` + options;
+      if (currentVal) select.value = currentVal;
+    }
+
+    function isDocumentForMe(item) {
+      if (!currentUser) return false;
+      const target = String(item.department || '').toLowerCase();
+      const myName = String(currentUser.fullName || '').toLowerCase();
+      const myDept = String(currentUser.department || '').toLowerCase();
+      return (myName && target.includes(myName)) || (myDept && target.includes(myDept));
+    }
+
+    async function loadDocuments(isFirstLoad = false) {
       const refreshBtn = document.getElementById('refreshBtn');
       refreshBtn.innerText = 'กำลังโหลด...';
 
@@ -188,89 +510,130 @@
         const res = await fetch(SCRIPT_URL);
         const json = await res.json();
         allDocuments = json.data || [];
-        
-        syncCategoriesFromData(allDocuments);
+        allUsers = json.users || [];
+
+        populateRecipientDropdown(allUsers);
+        checkIncomingNotifications(isFirstLoad);
         renderTable();
       } catch (err) {
-        tbody.innerHTML = '<tr><td colspan="5" class="p-8 text-center text-rose-400">โหลดข้อมูลไม่สำเร็จ กรุณาตรวจสอบ SCRIPT_URL หรือการตั้งค่า Deploy</td></tr>';
+        document.getElementById('docList').innerHTML = '<tr><td colspan="5" class="p-8 text-center text-red-600">ไม่สามารถโหลดข้อมูลได้</td></tr>';
       } finally {
-        refreshBtn.innerText = 'รีเฟรช';
+        refreshBtn.innerText = 'ปรับปรุงข้อมูล';
       }
     }
 
-    function syncCategoriesFromData(docs) {
-      const saved = JSON.parse(localStorage.getItem('docdrop_categories') || 'null') || [...DEFAULT_CATEGORIES];
-      const currentSelected = document.getElementById('categorySelect').value;
-      let updated = false;
+    function checkIncomingNotifications(isFirstLoad) {
+      const myPendingDocs = allDocuments.filter(d => isDocumentForMe(d) && d.status !== 'รับเรื่องแล้ว');
+      const count = myPendingDocs.length;
 
-      docs.forEach(doc => {
-        const match = String(doc.title).match(/^\[(.*?)\]/);
-        if (match && match[1] && !saved.includes(match[1])) {
-          saved.push(match[1]);
-          updated = true;
-        }
-      });
+      const alertBox = document.getElementById('myInboxAlert');
+      const badge = document.getElementById('myPendingCountBadge');
 
-      if (updated) {
-        localStorage.setItem('docdrop_categories', JSON.stringify(saved));
-        renderCategoryOptions(saved, currentSelected);
+      if (count > 0) {
+        alertBox.classList.remove('hidden');
+        document.getElementById('myInboxAlertTitle').innerText = `🔔 มีหนังสือราชการส่งถึงท่านรอลงรับ จำนวน ${count} ฉบับ`;
+        badge.innerText = count;
+        badge.classList.remove('hidden');
+
+        myPendingDocs.forEach(doc => {
+          if (!lastKnownPendingIds.has(doc.rowId)) {
+            if (!isFirstLoad && 'Notification' in window && Notification.permission === 'granted') {
+              new Notification('มีหนังสือราชการใหม่ถึงท่าน', {
+                body: `จาก: ${doc.sender}\n${doc.title}`
+              });
+            }
+          }
+        });
+      } else {
+        alertBox.classList.add('hidden');
+        badge.classList.add('hidden');
       }
+
+      lastKnownPendingIds = new Set(myPendingDocs.map(d => d.rowId));
+    }
+
+    function formatThaiDateTime(raw) {
+      const str = String(raw || '');
+      if (str.includes('T') && str.endsWith('Z')) {
+        const d = new Date(str);
+        if (!isNaN(d)) {
+          return d.toLocaleDateString('th-TH', { day: '2-digit', month: 'short', year: 'numeric' }) +
+            ' ' + d.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' }) + ' น.';
+        }
+      }
+      return str;
+    }
+
+    function getUrgencyBadgeHTML(urgency) {
+      if (!urgency || urgency === 'ปกติ') return '';
+      if (urgency === 'ด่วนที่สุด') return `<span class="inline-block bg-red-600 text-white text-xs px-2 py-0.5 rounded mr-1.5 font-bold">ด่วนที่สุด</span>`;
+      if (urgency === 'ด่วนมาก') return `<span class="inline-block bg-red-100 dark:bg-red-950/80 text-red-700 dark:text-red-300 border border-red-300 text-xs px-2 py-0.5 rounded mr-1.5 font-bold">ด่วนมาก</span>`;
+      return `<span class="inline-block bg-orange-100 dark:bg-orange-950/70 text-orange-800 dark:text-orange-300 border border-orange-300 text-xs px-2 py-0.5 rounded mr-1.5 font-bold">ด่วน</span>`;
     }
 
     function renderTable() {
       const tbody = document.getElementById('docList');
       const keyword = document.getElementById('searchInput').value.toLowerCase().trim();
-      const pendingBadge = document.getElementById('pendingBadge');
 
-      const pendingCount = allDocuments.filter(d => d.status !== 'รับเรื่องแล้ว').length;
-      pendingBadge.innerText = `รอรับเรื่อง ${pendingCount} รายการ`;
-      pendingBadge.classList.toggle('hidden', pendingCount === 0);
-
-      const filtered = allDocuments.filter(item =>
-        String(item.sender).toLowerCase().includes(keyword) ||
-        String(item.department).toLowerCase().includes(keyword) ||
-        String(item.title).toLowerCase().includes(keyword) ||
-        String(item.fileName).toLowerCase().includes(keyword)
-      );
+      const filtered = allDocuments.filter(item => {
+        if (currentFilterTab === 'mine' && !isDocumentForMe(item)) return false;
+        return (
+          String(item.sender).toLowerCase().includes(keyword) ||
+          String(item.department).toLowerCase().includes(keyword) ||
+          String(item.title).toLowerCase().includes(keyword) ||
+          String(item.fileName).toLowerCase().includes(keyword)
+        );
+      });
 
       if (filtered.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="5" class="p-8 text-center text-slate-500">ไม่พบรายการเอกสาร</td></tr>';
+        tbody.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-slate-500 dark:text-slate-400">${
+          currentFilterTab === 'mine' ? 'ยังไม่มีหนังสือราชการที่ส่งถึงท่านในขณะนี้' : 'ไม่พบรายการหนังสือในทะเบียน'
+        }</td></tr>`;
         return;
       }
 
       tbody.innerHTML = filtered.map(item => {
         const rawTitle = String(item.title || '');
-        const match = rawTitle.match(/^\[(.*?)\]\s*(.*)$/);
-        const titleHTML = match
-          ? `<span class="inline-block bg-indigo-500/15 text-indigo-300 border border-indigo-500/30 text-xs px-2 py-0.5 rounded mr-1.5 font-medium">${escapeHTML(match[1])}</span><span class="font-medium text-slate-200">${escapeHTML(match[2])}</span>`
-          : `<span class="font-medium text-slate-200">${escapeHTML(rawTitle)}</span>`;
+        const matchDual = rawTitle.match(/^\[(ปกติ|ด่วน|ด่วนมาก|ด่วนที่สุด)\]\s*\[(.*?)\]\s*(.*)$/);
+        const matchSingle = rawTitle.match(/^\[(.*?)\]\s*(.*)$/);
+
+        let titleHTML = '';
+        if (matchDual) {
+          titleHTML = `${getUrgencyBadgeHTML(matchDual[1])}<span class="inline-block bg-blue-50 dark:bg-blue-950 text-blue-900 dark:text-blue-200 border border-blue-200 dark:border-blue-800 text-xs px-2 py-0.5 rounded mr-1.5 font-semibold">${escapeHTML(matchDual[2])}</span><span class="font-medium">${escapeHTML(matchDual[3])}</span>`;
+        } else if (matchSingle) {
+          titleHTML = `<span class="inline-block bg-blue-50 dark:bg-blue-950 text-blue-900 dark:text-blue-200 border border-blue-200 dark:border-blue-800 text-xs px-2 py-0.5 rounded mr-1.5 font-semibold">${escapeHTML(matchSingle[1])}</span><span class="font-medium">${escapeHTML(matchSingle[2])}</span>`;
+        } else {
+          titleHTML = `<span class="font-medium">${escapeHTML(rawTitle)}</span>`;
+        }
+
+        const isReceived = item.status === 'รับเรื่องแล้ว';
 
         return `
-          <tr class="hover:bg-slate-800/40 transition">
-            <td class="p-3.5 text-xs text-slate-400 whitespace-nowrap">${escapeHTML(item.timestamp)}</td>
-            <td class="p-3.5 whitespace-nowrap">
-              <span class="font-medium text-slate-200">${escapeHTML(item.sender)}</span>
-              <span class="text-slate-600 mx-1.5">➔</span>
-              <span class="text-indigo-400 font-medium">${escapeHTML(item.department)}</span>
+          <tr class="hover:bg-slate-50/90 dark:hover:bg-slate-800/40 transition">
+            <td class="py-3.5 px-4 text-xs text-slate-600 dark:text-slate-400 whitespace-nowrap">${escapeHTML(formatThaiDateTime(item.timestamp))}</td>
+            <td class="py-3.5 px-4 whitespace-nowrap">
+              <span class="font-semibold">${escapeHTML(item.sender)}</span>
+              <span class="text-slate-400 mx-1.5">➔</span>
+              <span class="text-blue-900 dark:text-amber-400 font-bold">${escapeHTML(item.department)}</span>
             </td>
-            <td class="p-3.5">
-              <div class="mb-1">${titleHTML}</div>
+            <td class="py-3.5 px-4">
+              <div class="mb-1 flex flex-wrap items-center gap-y-1">${titleHTML}</div>
               <a href="${item.fileUrl}" target="_blank" rel="noopener noreferrer"
-                class="inline-flex items-center gap-1 text-xs text-sky-400 hover:text-sky-300 hover:underline">
-                📎 ${escapeHTML(item.fileName)}
+                class="inline-flex items-center gap-1 text-xs font-medium text-blue-700 dark:text-sky-400 hover:underline">
+                📄 เปิดดูเอกสาร: ${escapeHTML(item.fileName)}
               </a>
             </td>
-            <td class="p-3.5 whitespace-nowrap">
-              <span class="px-2.5 py-1 rounded-full text-xs font-medium ${
-                item.status === 'รับเรื่องแล้ว'
-                  ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
-                  : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
-              }">${escapeHTML(item.status)}</span>
+            <td class="py-3.5 px-4 text-center whitespace-nowrap">
+              <span class="px-2.5 py-1 rounded-full text-xs font-semibold ${
+                isReceived
+                  ? 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-800 dark:text-emerald-400 border border-emerald-200'
+                  : 'bg-amber-50 dark:bg-amber-500/10 text-amber-800 dark:text-amber-300 border border-amber-300'
+              }">${isReceived ? 'ลงรับแล้ว' : 'รอลงรับหนังสือ'}</span>
             </td>
-            <td class="p-3.5 text-right whitespace-nowrap">
-              ${item.status !== 'รับเรื่องแล้ว'
-                ? `<button onclick="markReceived(${item.rowId}, this)" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium px-3 py-1.5 rounded-lg transition">กดรับเอกสาร</button>`
-                : `<span class="text-xs text-slate-500">✓ เรียบร้อย</span>`
+            <td class="py-3.5 px-4 text-right whitespace-nowrap">
+              ${!isReceived
+                ? `<button onclick="markReceived(${item.rowId}, this)" class="bg-blue-900 dark:bg-amber-600 hover:bg-blue-800 text-white text-xs font-semibold px-3.5 py-1.5 rounded-lg transition shadow-sm">ลงรับหนังสือ</button>`
+                : `<span class="text-xs font-semibold text-emerald-700 dark:text-emerald-400">✓ ดำเนินการแล้ว</span>`
               }
             </td>
           </tr>
@@ -283,27 +646,29 @@
       const file = document.getElementById('fileInput').files[0];
       if (!file) return;
 
-      if (file.size > 25 * 1024 * 1024) {
-        alert('ไฟล์มีขนาดใหญ่เกิน 25MB กรุณาย่อขนาดไฟล์ก่อนส่งครับ');
-        return;
-      }
+      const recipientSelect = document.getElementById('recipientSelect');
+      const selectedOption = recipientSelect.options[recipientSelect.selectedIndex];
+      const recipientUsername = selectedOption ? selectedOption.getAttribute('data-username') : '';
 
       const btn = document.getElementById('submitBtn');
       btn.disabled = true;
-      btn.innerText = 'กำลังส่งไฟล์...';
+      btn.innerText = 'กำลังส่งและแจ้งเตือน...';
 
       const reader = new FileReader();
       reader.onload = async function() {
         try {
           const base64Data = reader.result.split(',')[1];
+          const urgency = document.getElementById('urgencySelect').value;
           const category = document.getElementById('categorySelect').value;
           const detail = document.getElementById('titleDetail').value.trim();
-          const combinedTitle = detail ? `[${category}] ${detail}` : `[${category}]`;
+          const combinedTitle = detail ? `[${urgency}] [${category}] ${detail}` : `[${urgency}] [${category}]`;
 
           const payload = {
-            pin: document.getElementById('pinInput').value,
-            sender: document.getElementById('sender').value.trim(),
-            department: document.getElementById('department').value.trim(),
+            username: currentUser.username,
+            password: currentUser.password,
+            sender: document.getElementById('sender').value,
+            department: recipientSelect.value,
+            recipientUsername: recipientUsername,
             title: combinedTitle,
             fileName: file.name,
             mimeType: file.type || 'application/octet-stream',
@@ -319,47 +684,48 @@
           if (result.status === 'success') {
             document.getElementById('titleDetail').value = '';
             document.getElementById('fileInput').value = '';
-            await loadDocuments();
+            await loadDocuments(false);
+            alert('ส่งหนังสือและแจ้งเตือนไปยังผู้รับเรียบร้อยแล้ว');
           } else {
             alert('เกิดข้อผิดพลาด: ' + result.message);
           }
         } catch (err) {
-          alert('ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้ กรุณาลองใหม่อีกครั้ง');
+          alert('ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้');
         } finally {
           btn.disabled = false;
-          btn.innerText = 'ส่งเอกสารทันที';
+          btn.innerText = 'บันทึกและส่งหนังสือ';
         }
       };
       reader.readAsDataURL(file);
     });
 
     async function markReceived(rowId, btnElement) {
-      const pin = document.getElementById('pinInput').value;
       btnElement.disabled = true;
-      btnElement.innerText = 'กำลังบันทึก...';
+      btnElement.innerText = 'กำลังลงรับ...';
 
       try {
         const res = await fetch(SCRIPT_URL, {
           method: 'POST',
           body: JSON.stringify({
             action: 'updateStatus',
-            pin: pin,
+            username: currentUser.username,
+            password: currentUser.password,
             rowId: rowId,
             newStatus: 'รับเรื่องแล้ว'
           })
         });
         const result = await res.json();
         if (result.status === 'success') {
-          await loadDocuments();
+          await loadDocuments(false);
         } else {
           alert(result.message);
           btnElement.disabled = false;
-          btnElement.innerText = 'กดรับเอกสาร';
+          btnElement.innerText = 'ลงรับหนังสือ';
         }
       } catch (err) {
-        alert('เกิดข้อผิดพลาดในการอัปเดตสถานะ');
+        alert('เกิดข้อผิดพลาด');
         btnElement.disabled = false;
-        btnElement.innerText = 'กดรับเอกสาร';
+        btnElement.innerText = 'ลงรับหนังสือ';
       }
     }
 
@@ -369,8 +735,7 @@
       }[m]));
     }
 
-    initCategories();
-    loadDocuments();
+    initApp();
   </script>
 </body>
 </html>
