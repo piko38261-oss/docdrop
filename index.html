@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ระบบสารบรรณอิเล็กทรอนิกส์และบันทึกยอดเอกสารรายวัน • จังหวัดสุรินทร์</title>
+  <title>ระบบสารบรรณอิเล็กทรอนิกส์และสมุดทะเบียนรับ • จังหวัดสุรินทร์</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = { darkMode: 'class' };
@@ -100,7 +100,6 @@
 
   <!-- หน้าหลักระบบสารบรรณ (App Screen) -->
   <div id="appScreen" class="hidden">
-    <!-- แถบหัวเรื่องส่วนราชการ + เมนูสลับ 2 หน้า -->
     <header class="bg-blue-950 dark:bg-slate-900 text-white border-b-4 border-amber-500 shadow-md">
       <div class="max-w-6xl mx-auto px-4 pt-4 pb-3 md:px-6">
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -115,7 +114,7 @@
                 <span class="bg-amber-500 text-blue-950 text-[11px] font-bold px-2 py-0.5 rounded tracking-wide">ระบบสารบรรณอิเล็กทรอนิกส์</span>
                 <span class="text-xs text-blue-200 dark:text-slate-300 hidden sm:inline">• ส่วนราชการจังหวัดสุรินทร์</span>
               </div>
-              <h1 class="text-lg md:text-xl font-bold text-white mt-0.5 tracking-tight">ระบบรับ-ส่งหนังสือราชการและบันทึกยอดเอกสารรายวัน</h1>
+              <h1 class="text-lg md:text-xl font-bold text-white mt-0.5 tracking-tight">ระบบรับ-ส่งหนังสือราชการและสมุดทะเบียนรับ</h1>
             </div>
           </div>
 
@@ -138,7 +137,6 @@
           </div>
         </div>
 
-        <!-- แถบปุ่มสลับระหว่าง หน้า 1 (รับ-ส่งไฟล์) และ หน้า 2 (บันทึกยอดเข้า-ออก/เซ็น/เจ้าพนักงาน แยกอิสระ) -->
         <nav class="flex flex-wrap gap-2 mt-4 pt-3 border-t border-blue-900/80 dark:border-slate-800">
           <button type="button" onclick="switchMainPage('pageSend')" id="navPageSend"
             class="px-4 py-2 rounded-lg text-xs md:text-sm font-bold transition flex items-center gap-2 bg-amber-500 text-blue-950 shadow-sm">
@@ -146,14 +144,14 @@
           </button>
           <button type="button" onclick="switchMainPage('pageTrack')" id="navPageTrack"
             class="px-4 py-2 rounded-lg text-xs md:text-sm font-bold transition flex items-center gap-2 bg-blue-900/80 dark:bg-slate-800 text-blue-100 hover:bg-blue-800 border border-blue-800 dark:border-slate-700">
-            📒 หน้า 2: บันทึกคุมยอดรายวัน (เข้า / เซ็น / เจ้าพนักงาน)
+            📒 หน้า 2: สมุดทะเบียนรับ (ที่ / เลขที่ / วัน / จาก / ถึง / ชื่อเรื่อง)
           </button>
         </nav>
       </div>
     </header>
 
     <!-- ===================================================================== -->
-    <!-- หน้า 1: ระบบรับ-ส่งหนังสือราชการ (เหมือนเดิม 100%)                    -->
+    <!-- หน้า 1: ระบบรับ-ส่งหนังสือราชการ                                      -->
     <!-- ===================================================================== -->
     <main id="pageSend" class="max-w-6xl mx-auto px-4 py-6 md:px-6 space-y-6">
 
@@ -293,59 +291,73 @@
     </main>
 
     <!-- ===================================================================== -->
-    <!-- หน้า 2: บันทึกคุมยอดเอกสารเข้า-ออกรายวัน (แยกอิสระ คีย์บันทึกเองล้วนๆ)  -->
+    <!-- หน้า 2: สมุดทะเบียนรับ (ที่ | เลขที่ | วัน | จาก | ถึง | ชื่อเรื่อง)     -->
     <!-- ===================================================================== -->
     <main id="pageTrack" class="hidden max-w-6xl mx-auto px-4 py-6 md:px-6 space-y-6">
 
-      <!-- ฟอร์มบันทึกยอดเอกสารเข้า-ออกด้วยตัวเอง -->
+      <!-- ฟอร์มลงทะเบียนรับเอกสาร -->
       <section class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-sm overflow-hidden">
         <div class="bg-slate-50 dark:bg-slate-800/60 px-5 py-3.5 border-b border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-2">
           <h2 class="font-bold text-blue-950 dark:text-slate-100 text-base flex items-center gap-2">
             <span class="w-1.5 h-5 bg-emerald-600 rounded-full"></span>
-            บันทึกสมุดคุมยอดเอกสารเข้า - ออกประจำวัน (คีย์บันทึกเอง)
+            ลงทะเบียนรับเอกสารเข้าสมุดคุม (ที่ / เลขที่ / วัน / จาก / ถึง / ชื่อเรื่อง)
           </h2>
-          <span class="text-xs text-slate-500 dark:text-slate-400">บันทึกแยกจากหน้าแรก • ใช้เช็กยอดเล่มเอกสารเข้า-ออกรายวัน</span>
+          <span class="text-xs text-slate-500 dark:text-slate-400">ระบุวันที่รับจริงแยกกับวันที่ในกระดาษ • นับยอดสรุปตามวันที่รับจริง</span>
         </div>
 
         <form id="ledgerForm" class="p-5 md:p-6 space-y-4">
-          <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+          <!-- แถวที่ 1: วันที่รับจริง (วันนี้) + ที่ + เลขที่ + วัน (วันที่ในกระดาษ) -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-12 gap-4">
             <div class="md:col-span-3">
-              <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">วันที่รับเอกสาร <span class="text-red-600">*</span></label>
+              <label class="block text-xs font-bold text-emerald-800 dark:text-emerald-400 mb-1">📅 วันที่รับจริง (วันนี้) <span class="text-red-600">*</span></label>
               <input type="date" id="ledgerDateInput" required
-                class="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-2 text-sm font-semibold text-slate-800 dark:text-slate-100 focus:outline-none focus:border-blue-800">
+                class="w-full bg-emerald-50/50 dark:bg-slate-950 border border-emerald-400 dark:border-emerald-600 rounded-lg px-3 py-2 text-sm font-bold text-emerald-950 dark:text-emerald-300 focus:outline-none">
             </div>
 
-            <div class="md:col-span-9">
-              <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">ชื่อเรื่อง / รายการแฟ้มเอกสาร / ส่งถึงเจ้าพนักงานคนใด <span class="text-red-600">*</span></label>
-              <input type="text" id="ledgerBookTitle" required placeholder="เช่น แฟ้มขออนุมัติเบิกจ่าย (ส่งถึงเจ้าพนักงานพัสดุ), หนังสือเวียนสัสดี..."
+            <div class="md:col-span-3">
+              <label class="block text-xs font-bold text-blue-900 dark:text-amber-400 mb-1">ที่ (ลำดับที่ลงสะสมทั้งปี) <span class="text-red-600">*</span></label>
+              <input type="text" id="ledgerSeqNo" required placeholder="เช่น 4000, 4001 (กรอกเอง)"
+                class="w-full bg-blue-50/50 dark:bg-slate-950 border border-blue-400 dark:border-amber-500/60 rounded-lg px-3.5 py-2 text-sm font-bold text-blue-950 dark:text-amber-300 placeholder-slate-400 focus:outline-none">
+            </div>
+
+            <div class="md:col-span-3">
+              <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">เลขที่ (เลขหัวหนังสือ) <span class="text-red-600">*</span></label>
+              <input type="text" id="ledgerDocNo" required placeholder="เช่น สร 0017.1/ว 123"
                 class="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-3.5 py-2 text-sm text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:border-blue-800">
+            </div>
+
+            <div class="md:col-span-3">
+              <label class="block text-xs font-bold text-amber-800 dark:text-amber-400 mb-1">📄 วัน (วันที่ในกระดาษ) <span class="text-red-600">*</span></label>
+              <input type="date" id="ledgerPaperDate" required
+                class="w-full bg-amber-50/50 dark:bg-slate-950 border border-amber-300 dark:border-amber-500/60 rounded-lg px-3 py-2 text-sm font-semibold text-slate-800 dark:text-amber-300 focus:outline-none">
             </div>
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
-            <div class="bg-blue-50/60 dark:bg-slate-950 border border-blue-200 dark:border-slate-800 rounded-lg p-3">
-              <label class="block text-xs font-bold text-blue-950 dark:text-blue-300 mb-1">📥 เอกสารเข้ามา (กี่เล่ม)</label>
-              <input type="number" id="ledgerQtyInput" min="1" value="1" required
-                class="w-full bg-white dark:bg-slate-900 border border-blue-300 dark:border-slate-700 rounded px-3 py-1.5 text-base font-bold text-blue-950 dark:text-white focus:outline-none">
+          <!-- แถวที่ 2: จาก, ถึง, ชื่อเรื่อง -->
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+            <div class="md:col-span-3">
+              <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">จาก (หน่วยงาน/ผู้ส่ง) <span class="text-red-600">*</span></label>
+              <input type="text" id="ledgerFrom" required placeholder="เช่น ที่ทำการปกครองจังหวัด"
+                class="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-3.5 py-2 text-sm text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:border-blue-800">
             </div>
 
-            <div class="bg-indigo-50/60 dark:bg-slate-950 border border-indigo-200 dark:border-slate-800 rounded-lg p-3">
-              <label class="block text-xs font-bold text-indigo-950 dark:text-indigo-300 mb-1">✍️ เซ็นแล้ว (กี่เล่ม)</label>
-              <input type="number" id="ledgerSignedInput" min="0" value="0" required
-                class="w-full bg-white dark:bg-slate-900 border border-indigo-300 dark:border-slate-700 rounded px-3 py-1.5 text-base font-bold text-indigo-700 dark:text-indigo-400 focus:outline-none">
+            <div class="md:col-span-3">
+              <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">ถึง (ผู้รับ / เจ้าพนักงาน) <span class="text-red-600">*</span></label>
+              <input type="text" id="ledgerTo" required placeholder="เช่น เจ้าพนักงานปกครอง"
+                class="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-3.5 py-2 text-sm text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:border-blue-800">
             </div>
 
-            <div class="bg-emerald-50/60 dark:bg-slate-950 border border-emerald-200 dark:border-slate-800 rounded-lg p-3">
-              <label class="block text-xs font-bold text-emerald-950 dark:text-emerald-300 mb-1">🤝 ถึงมือเจ้าพนักงานแล้ว (กี่เล่ม)</label>
-              <input type="number" id="ledgerDeliveredInput" min="0" value="0" required
-                class="w-full bg-white dark:bg-slate-900 border border-emerald-300 dark:border-slate-700 rounded px-3 py-1.5 text-base font-bold text-emerald-700 dark:text-emerald-400 focus:outline-none">
+            <div class="md:col-span-6">
+              <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">ชื่อเรื่อง <span class="text-red-600">*</span></label>
+              <input type="text" id="ledgerSubject" required placeholder="ระบุชื่อเรื่องตามหน้ากระดาษ..."
+                class="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-3.5 py-2 text-sm text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:border-blue-800">
             </div>
           </div>
 
           <div class="flex justify-end pt-2 border-t border-slate-100 dark:border-slate-800">
             <button type="submit" id="ledgerSubmitBtn"
               class="w-full sm:w-auto bg-emerald-700 hover:bg-emerald-600 disabled:bg-slate-400 text-white font-bold px-6 py-2.5 rounded-lg text-sm transition shadow-sm">
-              + บันทึกรายการลงสมุดคุมวันนี้
+              + บันทึกรายการลงสมุดทะเบียนรับ
             </button>
           </div>
         </form>
@@ -354,11 +366,11 @@
       <!-- แถบเลือกวันที่สรุปยอด + การ์ดสรุป 4 ช่อง -->
       <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
         <div>
-          <h3 class="font-bold text-blue-950 dark:text-slate-100 text-base">📊 สรุปยอดเอกสารเข้า - ออก</h3>
-          <p class="text-xs text-slate-500 dark:text-slate-400">ยอดรวมจำนวนเล่มตามวันที่เลือก</p>
+          <h3 class="font-bold text-blue-950 dark:text-slate-100 text-base">📊 สรุปยอดเอกสารประจำวัน (นับตามวันที่รับจริง)</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400">ยอดรวมจำนวนฉบับที่ลงทะเบียนรับในวันที่เลือก</p>
         </div>
         <div class="flex flex-wrap items-center gap-2">
-          <label for="trackDateFilter" class="text-xs font-semibold text-slate-600 dark:text-slate-300">เลือกวันที่:</label>
+          <label for="trackDateFilter" class="text-xs font-semibold text-slate-600 dark:text-slate-300">วันที่รับจริง:</label>
           <input type="date" id="trackDateFilter" onchange="renderTrackingPage()"
             class="bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-1.5 text-xs font-bold text-blue-950 dark:text-amber-400 focus:outline-none">
           <button type="button" onclick="resetTrackDateToday()"
@@ -377,15 +389,15 @@
           <div class="text-xs font-semibold text-slate-500 dark:text-slate-400">📥 เอกสารเข้ามาทั้งหมด</div>
           <div class="mt-2 flex items-baseline gap-2">
             <span id="statTotalIn" class="text-3xl font-bold text-blue-950 dark:text-white">0</span>
-            <span class="text-xs font-semibold text-slate-500">เล่ม</span>
+            <span class="text-xs font-semibold text-slate-500">ฉบับ</span>
           </div>
         </div>
 
         <div class="bg-white dark:bg-slate-900 border-l-4 border-amber-500 border-y border-r border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-sm">
-          <div class="text-xs font-semibold text-slate-500 dark:text-slate-400">⏳ ค้างเซ็น / ยังไม่เซ็น</div>
+          <div class="text-xs font-semibold text-slate-500 dark:text-slate-400">⏳ รอเซ็น / รอดำเนินการ</div>
           <div class="mt-2 flex items-baseline gap-2">
             <span id="statWaitingSign" class="text-3xl font-bold text-amber-600 dark:text-amber-400">0</span>
-            <span class="text-xs font-semibold text-slate-500">เล่ม</span>
+            <span class="text-xs font-semibold text-slate-500">ฉบับ</span>
           </div>
         </div>
 
@@ -393,7 +405,7 @@
           <div class="text-xs font-semibold text-slate-500 dark:text-slate-400">✍️ เซ็นแล้ว</div>
           <div class="mt-2 flex items-baseline gap-2">
             <span id="statSigned" class="text-3xl font-bold text-indigo-700 dark:text-indigo-400">0</span>
-            <span class="text-xs font-semibold text-slate-500">เล่ม</span>
+            <span class="text-xs font-semibold text-slate-500">ฉบับ</span>
           </div>
         </div>
 
@@ -401,34 +413,37 @@
           <div class="text-xs font-semibold text-slate-500 dark:text-slate-400">🤝 ถึงมือเจ้าพนักงานแล้ว</div>
           <div class="mt-2 flex items-baseline gap-2">
             <span id="statDelivered" class="text-3xl font-bold text-emerald-700 dark:text-emerald-400">0</span>
-            <span class="text-xs font-semibold text-slate-500">เล่ม</span>
+            <span class="text-xs font-semibold text-slate-500">ฉบับ</span>
           </div>
         </div>
       </div>
 
       <!-- ตารางรายการบันทึกของหน้า 2 -->
       <section class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-sm overflow-hidden">
-        <div class="bg-slate-50 dark:bg-slate-800/60 px-5 py-3.5 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center">
-          <h3 class="font-bold text-blue-950 dark:text-slate-100 text-sm">รายการบันทึกประจำวัน (กดอัปเดตสถานะเซ็น / ส่งเจ้าพนักงานได้ทันที)</h3>
-          <button onclick="loadAllData()" class="text-xs font-semibold bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 px-3 py-1.5 rounded-lg hover:bg-slate-100">
-            🔄 รีเฟรช
-          </button>
+        <div class="bg-slate-50 dark:bg-slate-800/60 px-5 py-3.5 border-b border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+          <h3 class="font-bold text-blue-950 dark:text-slate-100 text-sm">สมุดทะเบียนรับ (ที่ / เลขที่ / วัน / จาก / ถึง / ชื่อเรื่อง)</h3>
+          <div class="flex items-center gap-2 w-full sm:w-auto">
+            <input type="text" id="ledgerSearchInput" oninput="renderTrackingPage()" placeholder="ค้นหาที่, เลขที่, จาก, ถึง, เรื่อง..."
+              class="w-full sm:w-56 bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-1 text-xs text-slate-800 dark:text-slate-100 focus:outline-none">
+            <button onclick="loadAllData()" class="whitespace-nowrap text-xs font-semibold bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 px-3 py-1.5 rounded-lg hover:bg-slate-100">
+              🔄 รีเฟรช
+            </button>
+          </div>
         </div>
 
         <div class="overflow-x-auto">
           <table class="w-full text-left text-sm border-collapse">
             <thead class="bg-blue-950 dark:bg-slate-950 text-white dark:text-slate-300 text-xs font-semibold tracking-wider">
               <tr>
-                <th class="py-3 px-4 border-b border-blue-900 dark:border-slate-800">วันที่ / เวลา</th>
-                <th class="py-3 px-4 border-b border-blue-900 dark:border-slate-800">รายการเล่มเอกสาร / ผู้บันทึก</th>
-                <th class="py-3 px-4 border-b border-blue-900 dark:border-slate-800 text-center">เข้า (เล่ม)</th>
-                <th class="py-3 px-4 border-b border-blue-900 dark:border-slate-800 text-center">เซ็นแล้ว</th>
-                <th class="py-3 px-4 border-b border-blue-900 dark:border-slate-800 text-center">ถึงมือเจ้าพนักงาน</th>
+                <th class="py-3 px-4 border-b border-blue-900 dark:border-slate-800">วันที่รับจริง</th>
+                <th class="py-3 px-4 border-b border-blue-900 dark:border-slate-800 text-center">ที่</th>
+                <th class="py-3 px-4 border-b border-blue-900 dark:border-slate-800">เลขที่ / วัน / จาก / ถึง / ชื่อเรื่อง</th>
+                <th class="py-3 px-4 border-b border-blue-900 dark:border-slate-800 text-center">สถานะ</th>
                 <th class="py-3 px-4 border-b border-blue-900 dark:border-slate-800 text-right">ปรับสถานะ / ลบ</th>
               </tr>
             </thead>
             <tbody id="trackDocList" class="divide-y divide-slate-200 dark:divide-slate-800">
-              <tr><td colspan="6" class="p-8 text-center text-slate-500">กำลังโหลดข้อมูล...</td></tr>
+              <tr><td colspan="5" class="p-8 text-center text-slate-500">กำลังโหลดข้อมูล...</td></tr>
             </tbody>
           </table>
         </div>
@@ -459,6 +474,7 @@
 
       const today = getTodayISODate();
       document.getElementById('ledgerDateInput').value = today;
+      document.getElementById('ledgerPaperDate').value = today;
       document.getElementById('trackDateFilter').value = today;
 
       const saved = JSON.parse(localStorage.getItem('docdrop_categories') || 'null');
@@ -475,6 +491,11 @@
       const now = new Date();
       const offset = now.getTimezoneOffset() * 60000;
       return new Date(now - offset).toISOString().split('T')[0];
+    }
+
+    function getCurrentTimeHHMM() {
+      const now = new Date();
+      return now.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit', hour12: false });
     }
 
     function switchMainPage(pageId) {
@@ -572,7 +593,6 @@
         });
         const result = await res.json();
         if (result.status === 'success') {
-          alert('ลงทะเบียนเจ้าหน้าที่เรียบร้อยแล้ว ระบบกำลังพาเข้าสู่หน้าหลัก');
           currentUser = { ...result.user, password };
           localStorage.setItem('docdrop_gov_session', JSON.stringify(currentUser));
           requestDesktopNotification();
@@ -598,7 +618,7 @@
         : currentUser.fullName;
 
       loadAllData(true);
-      setInterval(() => loadAllData(false), 45000);
+      setInterval(() => loadAllData(false), 60000);
     }
 
     function logout() {
@@ -699,6 +719,7 @@
         checkIncomingNotifications(isFirstLoad);
         renderTable();
         renderTrackingPage();
+        suggestNextSeqNo();
       } catch (err) {
         document.getElementById('docList').innerHTML = '<tr><td colspan="5" class="p-8 text-center text-red-600">ไม่สามารถโหลดข้อมูลได้</td></tr>';
       } finally {
@@ -748,6 +769,19 @@
       return str;
     }
 
+    // แปลงเวลาที่ชีตส่งกลับมาเป็น 1899-12-30T... ให้เป็นเวลา HH:mm ปกติ
+    function formatCleanTime(raw) {
+      const str = String(raw || '').trim();
+      if (!str) return '-';
+      if (str.includes('T')) {
+        const d = new Date(str);
+        if (!isNaN(d)) {
+          return d.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit', hour12: false });
+        }
+      }
+      return str;
+    }
+
     function getUrgencyBadgeHTML(urgency) {
       if (!urgency || urgency === 'ปกติ') return '';
       if (urgency === 'ด่วนที่สุด') return `<span class="inline-block bg-red-600 text-white text-xs px-2 py-0.5 rounded mr-1.5 font-bold">ด่วนที่สุด</span>`;
@@ -769,7 +803,6 @@
       return `<span class="font-medium">${escapeHTML(str)}</span>`;
     }
 
-    // ตารางหน้า 1
     function renderTable() {
       const tbody = document.getElementById('docList');
       const keyword = document.getElementById('searchInput').value.toLowerCase().trim();
@@ -826,9 +859,6 @@
       }).join('');
     }
 
-    // =========================================================================
-    // ฟังก์ชันหน้า 2: บันทึกคุมยอดรายวัน (DailyLedger แยกอิสระ)
-    // =========================================================================
     function normalizeLedgerDate(raw) {
       const str = String(raw || '').trim();
       if (/^\d{4}-\d{2}-\d{2}$/.test(str)) return str;
@@ -849,6 +879,48 @@
       return `${parseInt(d, 10)} ${months[parseInt(m, 10) - 1]} ${parseInt(y, 10) + 543}`;
     }
 
+    function parseLedgerRecord(rawTitle) {
+      const str = String(rawTitle || '');
+      const m6 = str.match(/^\[SEQ:(.*?)\]\s*\[NO:(.*?)\]\s*\[PAPER:(.*?)\]\s*\[FROM:(.*?)\]\s*\[TO:(.*?)\]\s*(.*)$/);
+      if (m6) {
+        return {
+          isStructured: true,
+          seqNo: m6[1],
+          docNo: m6[2],
+          paperDate: m6[3],
+          fromWho: m6[4],
+          toWho: m6[5],
+          subject: m6[6]
+        };
+      }
+      const m5 = str.match(/^\[NO:(.*?)\]\s*\[PAPER:(.*?)\]\s*\[FROM:(.*?)\]\s*\[TO:(.*?)\]\s*(.*)$/);
+      if (m5) {
+        return {
+          isStructured: true,
+          seqNo: '-',
+          docNo: m5[1],
+          paperDate: m5[2],
+          fromWho: m5[3],
+          toWho: m5[4],
+          subject: m5[5]
+        };
+      }
+      return { isStructured: false, seqNo: '-', subject: str };
+    }
+
+    function suggestNextSeqNo() {
+      const seqInput = document.getElementById('ledgerSeqNo');
+      if (!seqInput || seqInput.value.trim() !== '') return;
+      for (const item of allLedger) {
+        const parsed = parseLedgerRecord(item.bookTitle);
+        const num = parseInt(String(parsed.seqNo).replace(/[^\d]/g, ''), 10);
+        if (!isNaN(num)) {
+          seqInput.value = num + 1;
+          return;
+        }
+      }
+    }
+
     function resetTrackDateToday() {
       document.getElementById('trackDateFilter').value = getTodayISODate();
       renderTrackingPage();
@@ -861,8 +933,9 @@
 
     function renderTrackingPage() {
       const selectedDate = document.getElementById('trackDateFilter').value;
+      const keyword = (document.getElementById('ledgerSearchInput')?.value || '').toLowerCase().trim();
 
-      const filteredLedger = selectedDate
+      const dateMatchedLedger = selectedDate
         ? allLedger.filter(item => normalizeLedgerDate(item.date) === selectedDate)
         : allLedger;
 
@@ -870,10 +943,11 @@
       let totalSigned = 0;
       let totalDelivered = 0;
 
-      filteredLedger.forEach(item => {
-        totalIn += Number(item.quantity) || 0;
-        totalSigned += Number(item.signedCount) || 0;
-        totalDelivered += Number(item.deliveredCount) || 0;
+      dateMatchedLedger.forEach(item => {
+        const qty = Number(item.quantity) || 1;
+        totalIn += qty;
+        if ((Number(item.signedCount) || 0) >= qty) totalSigned += qty;
+        if ((Number(item.deliveredCount) || 0) >= qty) totalDelivered += qty;
       });
 
       const waitingSign = Math.max(0, totalIn - totalSigned);
@@ -883,63 +957,88 @@
       document.getElementById('statSigned').innerText = totalSigned;
       document.getElementById('statDelivered').innerText = totalDelivered;
 
+      const filteredDisplay = dateMatchedLedger.filter(item =>
+        String(item.bookTitle).toLowerCase().includes(keyword) ||
+        String(item.recorder).toLowerCase().includes(keyword)
+      );
+
       const tbody = document.getElementById('trackDocList');
-      if (filteredLedger.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-slate-500 dark:text-slate-400">ยังไม่มีรายการบันทึกในวันที่เลือก สามารถกรอกบันทึกด้านบนได้เลยครับ</td></tr>';
+      if (filteredDisplay.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" class="p-8 text-center text-slate-500 dark:text-slate-400">ยังไม่มีรายการบันทึกในวันที่เลือก สามารถกรอกบันทึกด้านบนได้เลยครับ</td></tr>';
         return;
       }
 
-      tbody.innerHTML = filteredLedger.map(item => {
+      tbody.innerHTML = filteredDisplay.map(item => {
         const dStr = normalizeLedgerDate(item.date);
         const qty = Number(item.quantity) || 1;
         const signed = Number(item.signedCount) || 0;
         const delivered = Number(item.deliveredCount) || 0;
         const isAllSigned = signed >= qty;
         const isAllDelivered = delivered >= qty;
+        const parsed = parseLedgerRecord(item.bookTitle);
+        const isSyncing = item._syncing === true;
+
+        let detailHTML = '';
+        if (parsed.isStructured) {
+          detailHTML = `
+            <div class="flex flex-wrap items-center gap-1.5 mb-1">
+              <span class="bg-blue-50 dark:bg-blue-950 text-blue-900 dark:text-blue-200 border border-blue-200 dark:border-blue-800 text-xs px-2 py-0.5 rounded font-bold">
+                เลขที่: ${escapeHTML(parsed.docNo)}
+              </span>
+              <span class="bg-amber-50 dark:bg-amber-950/60 text-amber-900 dark:text-amber-300 border border-amber-300 dark:border-amber-700 text-xs px-2 py-0.5 rounded font-semibold">
+                วันในกระดาษ: ${escapeHTML(formatDisplayThaiDate(parsed.paperDate))}
+              </span>
+              ${isSyncing ? `<span class="text-[11px] text-amber-600 animate-pulse font-semibold">• กำลังซิงค์ลงชีต...</span>` : ''}
+            </div>
+            <div class="text-xs text-slate-700 dark:text-slate-300 mb-0.5">
+              <span class="font-semibold">จาก:</span> ${escapeHTML(parsed.fromWho)}
+              <span class="text-slate-400 mx-1">➔</span>
+              <span class="font-semibold text-blue-900 dark:text-amber-400">ถึง: ${escapeHTML(parsed.toWho)}</span>
+            </div>
+            <div class="font-bold text-slate-900 dark:text-slate-100 text-sm">
+              ชื่อเรื่อง: ${escapeHTML(parsed.subject)}
+            </div>
+            <div class="text-[11px] text-slate-500 mt-0.5">ผู้ลงบันทึก: ${escapeHTML(item.recorder)}</div>
+          `;
+        } else {
+          detailHTML = `
+            <div class="font-bold text-slate-800 dark:text-slate-100">${escapeHTML(parsed.subject)}</div>
+            <div class="text-xs text-slate-500">ผู้บันทึก: ${escapeHTML(item.recorder)}</div>
+          `;
+        }
+
+        let statusBadgeHTML = '';
+        if (isAllDelivered) {
+          statusBadgeHTML = `<span class="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300">✅ ถึงมือเจ้าพนักงานแล้ว</span>`;
+        } else if (isAllSigned) {
+          statusBadgeHTML = `<span class="px-2.5 py-1 rounded-full text-xs font-bold bg-indigo-100 dark:bg-indigo-950 text-indigo-800 dark:text-indigo-300 border border-indigo-300">✍️ เซ็นแล้ว</span>`;
+        } else {
+          statusBadgeHTML = `<span class="px-2.5 py-1 rounded-full text-xs font-bold bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-amber-300">⏳ รอเซ็น / รอดำเนินการ</span>`;
+        }
 
         return `
           <tr class="hover:bg-slate-50/90 dark:hover:bg-slate-800/40 transition">
-            <td class="py-3.5 px-4 text-xs text-slate-600 dark:text-slate-400 whitespace-nowrap">
-              <div class="font-bold text-slate-800 dark:text-slate-200">${escapeHTML(formatDisplayThaiDate(dStr))}</div>
-              <div>เวลา ${escapeHTML(item.timestamp || '-')} น.</div>
+            <td class="py-3.5 px-4 text-xs text-slate-600 dark:text-slate-400 whitespace-nowrap align-top">
+              <div class="font-bold text-emerald-800 dark:text-emerald-400">${escapeHTML(formatDisplayThaiDate(dStr))}</div>
+              <div>เวลา ${escapeHTML(formatCleanTime(item.timestamp))} น.</div>
             </td>
-            <td class="py-3.5 px-4">
-              <div class="font-bold text-slate-800 dark:text-slate-100">${escapeHTML(item.bookTitle)}</div>
-              <div class="text-xs text-slate-500">ผู้บันทึก: ${escapeHTML(item.recorder)}</div>
-            </td>
-            <td class="py-3.5 px-4 text-center whitespace-nowrap">
-              <span class="px-2.5 py-1 rounded-md text-xs font-bold bg-blue-50 dark:bg-blue-950 text-blue-900 dark:text-blue-200 border border-blue-200 dark:border-blue-800">
-                ${qty} เล่ม
+            <td class="py-3.5 px-4 text-center whitespace-nowrap align-top">
+              <span class="inline-block px-2.5 py-1 rounded-md text-xs font-bold bg-amber-100 dark:bg-amber-950 text-amber-950 dark:text-amber-300 border border-amber-300 dark:border-amber-700">
+                ${escapeHTML(parsed.seqNo)}
               </span>
             </td>
-            <td class="py-3.5 px-4 text-center whitespace-nowrap">
-              <span class="px-2.5 py-1 rounded-md text-xs font-bold ${
-                isAllSigned
-                  ? 'bg-indigo-100 dark:bg-indigo-950 text-indigo-800 dark:text-indigo-300 border border-indigo-300'
-                  : 'bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-amber-300'
-              }">
-                ${signed} / ${qty} เล่ม
-              </span>
-            </td>
-            <td class="py-3.5 px-4 text-center whitespace-nowrap">
-              <span class="px-2.5 py-1 rounded-md text-xs font-bold ${
-                isAllDelivered
-                  ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300'
-                  : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-300 dark:border-slate-700'
-              }">
-                ${delivered} / ${qty} เล่ม
-              </span>
-            </td>
-            <td class="py-3.5 px-4 text-right whitespace-nowrap space-x-1.5">
+            <td class="py-3.5 px-4 align-top">${detailHTML}</td>
+            <td class="py-3.5 px-4 text-center whitespace-nowrap align-top">${statusBadgeHTML}</td>
+            <td class="py-3.5 px-4 text-right whitespace-nowrap space-x-1 align-top">
               ${!isAllSigned
-                ? `<button onclick="updateLedgerEntry(${item.rowId}, ${qty}, ${delivered}, this)" class="bg-indigo-700 hover:bg-indigo-600 text-white text-xs font-bold px-2.5 py-1.5 rounded-lg transition">✍️ เซ็นครบแล้ว</button>`
+                ? `<button ${isSyncing ? 'disabled' : ''} onclick="updateLedgerEntry(${item.rowId}, ${qty}, ${delivered})" class="bg-indigo-700 hover:bg-indigo-600 disabled:opacity-50 text-white text-xs font-bold px-2.5 py-1.5 rounded-lg transition">✍️ เซ็นแล้ว</button>`
                 : ''
               }
               ${!isAllDelivered
-                ? `<button onclick="updateLedgerEntry(${item.rowId}, ${Math.max(signed, qty)}, ${qty}, this)" class="bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-bold px-2.5 py-1.5 rounded-lg transition">🤝 ถึงมือเจ้าพนักงาน</button>`
-                : `<span class="text-xs font-bold text-emerald-700 dark:text-emerald-400 mr-1">✅ เรียบร้อย</span>`
+                ? `<button ${isSyncing ? 'disabled' : ''} onclick="updateLedgerEntry(${item.rowId}, ${Math.max(signed, qty)}, ${qty})" class="bg-emerald-700 hover:bg-emerald-600 disabled:opacity-50 text-white text-xs font-bold px-2.5 py-1.5 rounded-lg transition">🤝 ถึงมือเจ้าพนักงาน</button>`
+                : ''
               }
-              <button onclick="deleteLedgerEntry(${item.rowId}, this)" title="ลบรายการนี้" class="text-xs text-rose-600 hover:text-rose-800 px-2 py-1.5 rounded hover:bg-rose-50 dark:hover:bg-rose-950/40">
+              <button ${isSyncing ? 'disabled' : ''} onclick="deleteLedgerEntry(${item.rowId})" title="ลบรายการนี้" class="text-xs text-rose-600 hover:text-rose-800 disabled:opacity-50 px-2 py-1.5 rounded hover:bg-rose-50 dark:hover:bg-rose-950/40">
                 ลบ
               </button>
             </td>
@@ -948,24 +1047,47 @@
       }).join('');
     }
 
-    // บันทึกข้อมูลใหม่ลงหน้า 2
+    // บันทึกข้อมูลแบบ Optimistic UI (ขึ้นตารางทันทีใน 0.1 วินาที แล้วซิงค์ลงชีตเบื้องหลัง)
     document.getElementById('ledgerForm').addEventListener('submit', async function(e) {
       e.preventDefault();
       const date = document.getElementById('ledgerDateInput').value;
-      const bookTitle = document.getElementById('ledgerBookTitle').value.trim();
-      const quantity = Number(document.getElementById('ledgerQtyInput').value) || 1;
-      const signedCount = Number(document.getElementById('ledgerSignedInput').value) || 0;
-      const deliveredCount = Number(document.getElementById('ledgerDeliveredInput').value) || 0;
+      const seqNo = document.getElementById('ledgerSeqNo').value.trim();
+      const docNo = document.getElementById('ledgerDocNo').value.trim();
+      const paperDate = document.getElementById('ledgerPaperDate').value;
+      const fromWho = document.getElementById('ledgerFrom').value.trim();
+      const toWho = document.getElementById('ledgerTo').value.trim();
+      const subject = document.getElementById('ledgerSubject').value.trim();
 
-      if (signedCount > quantity || deliveredCount > quantity) {
-        alert('จำนวนเล่มที่เซ็นแล้ว หรือถึงมือเจ้าพนักงาน ต้องไม่เกินจำนวนเอกสารที่เข้ามาครับ');
-        return;
-      }
+      const structuredTitle = `[SEQ:${seqNo}] [NO:${docNo}] [PAPER:${paperDate}] [FROM:${fromWho}] [TO:${toWho}] ${subject}`;
 
-      const btn = document.getElementById('ledgerSubmitBtn');
-      btn.disabled = true;
-      btn.innerText = 'กำลังบันทึก...';
+      // 1. แสดงผลบนหน้าจอและล้างฟอร์มให้พร้อมกรอกใบถัดไปทันที
+      const tempId = Date.now();
+      const newEntry = {
+        rowId: tempId,
+        date: date,
+        timestamp: getCurrentTimeHHMM(),
+        bookTitle: structuredTitle,
+        quantity: 1,
+        signedCount: 0,
+        deliveredCount: 0,
+        recorder: currentUser.fullName,
+        _syncing: true
+      };
 
+      allLedger.unshift(newEntry);
+
+      const nextNum = parseInt(seqNo.replace(/[^\d]/g, ''), 10);
+      document.getElementById('ledgerSeqNo').value = !isNaN(nextNum) ? (nextNum + 1) : '';
+      document.getElementById('ledgerDocNo').value = '';
+      document.getElementById('ledgerFrom').value = '';
+      document.getElementById('ledgerTo').value = '';
+      document.getElementById('ledgerSubject').value = '';
+      document.getElementById('trackDateFilter').value = date;
+      document.getElementById('ledgerDocNo').focus();
+
+      renderTrackingPage();
+
+      // 2. ส่งข้อมูลไปบันทึกใน Google Sheets เบื้องหลัง
       try {
         const res = await fetch(SCRIPT_URL, {
           method: 'POST',
@@ -974,35 +1096,41 @@
             username: currentUser.username,
             password: currentUser.password,
             date,
-            bookTitle,
-            quantity,
-            signedCount,
-            deliveredCount,
+            bookTitle: structuredTitle,
+            quantity: 1,
+            signedCount: 0,
+            deliveredCount: 0,
             recorder: currentUser.fullName
           })
         });
         const result = await res.json();
         if (result.status === 'success') {
-          document.getElementById('ledgerBookTitle').value = '';
-          document.getElementById('ledgerQtyInput').value = 1;
-          document.getElementById('ledgerSignedInput').value = 0;
-          document.getElementById('ledgerDeliveredInput').value = 0;
-          document.getElementById('trackDateFilter').value = date;
-          await loadAllData(false);
+          // ซิงค์ rowId จริงจากชีตเงียบๆ
+          const refreshRes = await fetch(SCRIPT_URL);
+          const refreshJson = await refreshRes.json();
+          allLedger = refreshJson.ledger || allLedger;
+          renderTrackingPage();
         } else {
-          alert('เกิดข้อผิดพลาด: ' + result.message);
+          alert('บันทึกไม่สำเร็จ: ' + result.message);
+          allLedger = allLedger.filter(x => x.rowId !== tempId);
+          renderTrackingPage();
         }
       } catch (err) {
-        alert('ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้');
-      } finally {
-        btn.disabled = false;
-        btn.innerText = '+ บันทึกรายการลงสมุดคุมวันนี้';
+        alert('การเชื่อมต่อขัดข้อง รายการล่าสุดอาจยังไม่ถูกบันทึก');
       }
     });
 
-    async function updateLedgerEntry(rowId, signedCount, deliveredCount, btnElement) {
-      btnElement.disabled = true;
-      btnElement.innerText = '...';
+    // อัปเดตสถานะแบบเปลี่ยนสีปุ่มทันที ไม่ต้องรอโหลด
+    async function updateLedgerEntry(rowId, signedCount, deliveredCount) {
+      const target = allLedger.find(x => x.rowId === rowId);
+      if (!target) return;
+      const prevSigned = target.signedCount;
+      const prevDelivered = target.deliveredCount;
+
+      target.signedCount = signedCount;
+      target.deliveredCount = deliveredCount;
+      renderTrackingPage();
+
       try {
         const res = await fetch(SCRIPT_URL, {
           method: 'POST',
@@ -1016,19 +1144,26 @@
           })
         });
         const result = await res.json();
-        if (result.status === 'success') {
-          await loadAllData(false);
-        } else {
+        if (result.status !== 'success') {
+          target.signedCount = prevSigned;
+          target.deliveredCount = prevDelivered;
+          renderTrackingPage();
           alert(result.message);
         }
       } catch (err) {
-        alert('เกิดข้อผิดพลาด');
+        target.signedCount = prevSigned;
+        target.deliveredCount = prevDelivered;
+        renderTrackingPage();
       }
     }
 
-    async function deleteLedgerEntry(rowId, btnElement) {
+    // ลบรายการแบบหายจากตารางทันที
+    async function deleteLedgerEntry(rowId) {
       if (!confirm('ยืนยันลบรายการบันทึกนี้ออกจากสมุดคุม?')) return;
-      btnElement.disabled = true;
+      const backup = [...allLedger];
+      allLedger = allLedger.filter(x => x.rowId !== rowId);
+      renderTrackingPage();
+
       try {
         const res = await fetch(SCRIPT_URL, {
           method: 'POST',
@@ -1040,13 +1175,19 @@
           })
         });
         const result = await res.json();
-        if (result.status === 'success') {
-          await loadAllData(false);
-        } else {
+        if (result.status !== 'success') {
+          allLedger = backup;
+          renderTrackingPage();
           alert(result.message);
+        } else {
+          const refreshRes = await fetch(SCRIPT_URL);
+          const refreshJson = await refreshRes.json();
+          allLedger = refreshJson.ledger || allLedger;
+          renderTrackingPage();
         }
       } catch (err) {
-        alert('เกิดข้อผิดพลาด');
+        allLedger = backup;
+        renderTrackingPage();
       }
     }
 
