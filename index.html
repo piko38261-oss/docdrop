@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ระบบรับ-ส่งหนังสือราชการและเอกสารอิเล็กทรอนิกส์ • จังหวัดสุรินทร์</title>
+  <title>ระบบสารบรรณอิเล็กทรอนิกส์และบันทึกยอดเอกสารรายวัน • จังหวัดสุรินทร์</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = { darkMode: 'class' };
@@ -29,7 +29,6 @@
         <p class="text-xs text-blue-200 mt-1">ส่วนราชการจังหวัดสุรินทร์ • สำหรับเจ้าหน้าที่ภายใน</p>
       </div>
 
-      <!-- แท็บสลับ เข้าสู่ระบบ / ลงทะเบียน -->
       <div class="grid grid-cols-2 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950">
         <button type="button" onclick="switchAuthTab('login')" id="authTabLogin"
           class="py-3 text-sm font-bold text-blue-950 dark:text-amber-400 border-b-2 border-blue-900 dark:border-amber-500 bg-white dark:bg-slate-900 transition">
@@ -41,7 +40,6 @@
         </button>
       </div>
 
-      <!-- ฟอร์มเข้าสู่ระบบ -->
       <form id="loginForm" autocomplete="off" class="p-6 space-y-4">
         <div>
           <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1">ชื่อผู้ใช้งาน (Username) หรือ อีเมล</label>
@@ -59,7 +57,6 @@
         </button>
       </form>
 
-      <!-- ฟอร์มลงทะเบียนเจ้าหน้าที่ใหม่ -->
       <form id="registerForm" autocomplete="off" class="hidden p-6 space-y-3.5">
         <div>
           <label class="block text-xs font-bold text-amber-700 dark:text-amber-400 mb-1">รหัสยืนยันหน่วยงาน (PIN) <span class="text-red-600">*</span></label>
@@ -103,46 +100,63 @@
 
   <!-- หน้าหลักระบบสารบรรณ (App Screen) -->
   <div id="appScreen" class="hidden">
+    <!-- แถบหัวเรื่องส่วนราชการ + เมนูสลับ 2 หน้า -->
     <header class="bg-blue-950 dark:bg-slate-900 text-white border-b-4 border-amber-500 shadow-md">
-      <div class="max-w-6xl mx-auto px-4 py-4 md:px-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <div class="flex items-center gap-3.5">
-          <div class="w-12 h-12 rounded-lg bg-amber-500/15 border border-amber-400/40 flex items-center justify-center shrink-0">
-            <svg class="w-7 h-7 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
-          </div>
-          <div>
-            <div class="flex items-center gap-2">
-              <span class="bg-amber-500 text-blue-950 text-[11px] font-bold px-2 py-0.5 rounded tracking-wide">ระบบสารบรรณอิเล็กทรอนิกส์</span>
-              <span class="text-xs text-blue-200 dark:text-slate-300 hidden sm:inline">• ส่วนราชการจังหวัดสุรินทร์</span>
+      <div class="max-w-6xl mx-auto px-4 pt-4 pb-3 md:px-6">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div class="flex items-center gap-3.5">
+            <div class="w-12 h-12 rounded-lg bg-amber-500/15 border border-amber-400/40 flex items-center justify-center shrink-0">
+              <svg class="w-7 h-7 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
             </div>
-            <h1 class="text-lg md:text-xl font-bold text-white mt-0.5 tracking-tight">ระบบรับ-ส่งหนังสือราชการและเอกสารภายใน</h1>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="bg-amber-500 text-blue-950 text-[11px] font-bold px-2 py-0.5 rounded tracking-wide">ระบบสารบรรณอิเล็กทรอนิกส์</span>
+                <span class="text-xs text-blue-200 dark:text-slate-300 hidden sm:inline">• ส่วนราชการจังหวัดสุรินทร์</span>
+              </div>
+              <h1 class="text-lg md:text-xl font-bold text-white mt-0.5 tracking-tight">ระบบรับ-ส่งหนังสือราชการและบันทึกยอดเอกสารรายวัน</h1>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2.5 self-end md:self-auto">
+            <div class="bg-blue-900/90 dark:bg-slate-800 border border-blue-800 dark:border-slate-700 px-3 py-1.5 rounded-lg text-right">
+              <div id="userFullNameDisplay" class="text-xs font-bold text-amber-300"></div>
+              <div id="userDeptDisplay" class="text-[11px] text-blue-200 dark:text-slate-400"></div>
+            </div>
+
+            <button type="button" onclick="toggleTheme()" id="themeToggleBtn"
+              class="flex items-center gap-1.5 bg-blue-900/80 dark:bg-slate-800 hover:bg-blue-800 dark:hover:bg-slate-700 border border-blue-700 dark:border-slate-700 px-3 py-2 rounded-lg text-xs font-semibold text-blue-100 dark:text-amber-300 transition">
+              <span id="themeIcon">🌙</span>
+              <span id="themeText" class="hidden sm:inline">โหมดมืด</span>
+            </button>
+
+            <button type="button" onclick="logout()"
+              class="bg-rose-600/90 hover:bg-rose-600 text-white px-3 py-2 rounded-lg text-xs font-semibold transition">
+              ออกจากระบบ
+            </button>
           </div>
         </div>
 
-        <div class="flex flex-wrap items-center gap-2.5 self-end md:self-auto">
-          <div class="bg-blue-900/90 dark:bg-slate-800 border border-blue-800 dark:border-slate-700 px-3 py-1.5 rounded-lg text-right">
-            <div id="userFullNameDisplay" class="text-xs font-bold text-amber-300"></div>
-            <div id="userDeptDisplay" class="text-[11px] text-blue-200 dark:text-slate-400"></div>
-          </div>
-
-          <button type="button" onclick="toggleTheme()" id="themeToggleBtn"
-            class="flex items-center gap-1.5 bg-blue-900/80 dark:bg-slate-800 hover:bg-blue-800 dark:hover:bg-slate-700 border border-blue-700 dark:border-slate-700 px-3 py-2 rounded-lg text-xs font-semibold text-blue-100 dark:text-amber-300 transition">
-            <span id="themeIcon">🌙</span>
-            <span id="themeText" class="hidden sm:inline">โหมดมืด</span>
+        <!-- แถบปุ่มสลับระหว่าง หน้า 1 (รับ-ส่งไฟล์) และ หน้า 2 (บันทึกยอดเข้า-ออก/เซ็น/เจ้าพนักงาน แยกอิสระ) -->
+        <nav class="flex flex-wrap gap-2 mt-4 pt-3 border-t border-blue-900/80 dark:border-slate-800">
+          <button type="button" onclick="switchMainPage('pageSend')" id="navPageSend"
+            class="px-4 py-2 rounded-lg text-xs md:text-sm font-bold transition flex items-center gap-2 bg-amber-500 text-blue-950 shadow-sm">
+            📨 หน้า 1: รับ-ส่งหนังสือราชการ
           </button>
-
-          <button type="button" onclick="logout()"
-            class="bg-rose-600/90 hover:bg-rose-600 text-white px-3 py-2 rounded-lg text-xs font-semibold transition">
-            ออกจากระบบ
+          <button type="button" onclick="switchMainPage('pageTrack')" id="navPageTrack"
+            class="px-4 py-2 rounded-lg text-xs md:text-sm font-bold transition flex items-center gap-2 bg-blue-900/80 dark:bg-slate-800 text-blue-100 hover:bg-blue-800 border border-blue-800 dark:border-slate-700">
+            📒 หน้า 2: บันทึกคุมยอดรายวัน (เข้า / เซ็น / เจ้าพนักงาน)
           </button>
-        </div>
+        </nav>
       </div>
     </header>
 
-    <main class="max-w-6xl mx-auto px-4 py-6 md:px-6 space-y-6">
+    <!-- ===================================================================== -->
+    <!-- หน้า 1: ระบบรับ-ส่งหนังสือราชการ (เหมือนเดิม 100%)                    -->
+    <!-- ===================================================================== -->
+    <main id="pageSend" class="max-w-6xl mx-auto px-4 py-6 md:px-6 space-y-6">
 
-      <!-- แถบแจ้งเตือนหนังสือส่งถึงฉัน -->
       <div id="myInboxAlert" class="hidden bg-amber-50 dark:bg-amber-950/40 border-l-4 border-amber-500 rounded-r-xl p-4 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div class="flex items-center gap-3">
           <span class="text-2xl">🔔</span>
@@ -157,7 +171,6 @@
         </button>
       </div>
 
-      <!-- แบบฟอร์มส่งหนังสือ / เอกสาร -->
       <section class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-sm overflow-hidden">
         <div class="bg-slate-50 dark:bg-slate-800/60 px-5 py-3.5 border-b border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-2">
           <h2 class="font-bold text-blue-950 dark:text-slate-100 text-base flex items-center gap-2">
@@ -236,7 +249,6 @@
         </form>
       </section>
 
-      <!-- ทะเบียนคุมหนังสือรับ-ส่ง + แท็บกรองกล่องขาเข้า -->
       <section class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-sm overflow-hidden">
         <div class="bg-slate-50 dark:bg-slate-800/60 px-5 py-3.5 border-b border-slate-200 dark:border-slate-800 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-3">
           <div class="flex flex-wrap items-center gap-2">
@@ -254,7 +266,7 @@
           <div class="flex items-center gap-2 w-full lg:w-auto">
             <input type="text" id="searchInput" oninput="renderTable()" placeholder="ค้นหาผู้ส่ง, ผู้รับ, เรื่อง, ด่วน..."
               class="w-full lg:w-64 bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-1.5 text-sm text-slate-800 dark:text-slate-100 focus:outline-none focus:border-blue-800">
-            <button onclick="loadDocuments()" id="refreshBtn"
+            <button onclick="loadAllData()" id="refreshBtn"
               class="whitespace-nowrap text-xs font-semibold bg-white dark:bg-slate-800 hover:bg-slate-100 border border-slate-300 dark:border-slate-700 px-3.5 py-2 rounded-lg text-slate-700 dark:text-slate-200 transition">
               ปรับปรุงข้อมูล
             </button>
@@ -279,12 +291,156 @@
         </div>
       </section>
     </main>
+
+    <!-- ===================================================================== -->
+    <!-- หน้า 2: บันทึกคุมยอดเอกสารเข้า-ออกรายวัน (แยกอิสระ คีย์บันทึกเองล้วนๆ)  -->
+    <!-- ===================================================================== -->
+    <main id="pageTrack" class="hidden max-w-6xl mx-auto px-4 py-6 md:px-6 space-y-6">
+
+      <!-- ฟอร์มบันทึกยอดเอกสารเข้า-ออกด้วยตัวเอง -->
+      <section class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-sm overflow-hidden">
+        <div class="bg-slate-50 dark:bg-slate-800/60 px-5 py-3.5 border-b border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-2">
+          <h2 class="font-bold text-blue-950 dark:text-slate-100 text-base flex items-center gap-2">
+            <span class="w-1.5 h-5 bg-emerald-600 rounded-full"></span>
+            บันทึกสมุดคุมยอดเอกสารเข้า - ออกประจำวัน (คีย์บันทึกเอง)
+          </h2>
+          <span class="text-xs text-slate-500 dark:text-slate-400">บันทึกแยกจากหน้าแรก • ใช้เช็กยอดเล่มเอกสารเข้า-ออกรายวัน</span>
+        </div>
+
+        <form id="ledgerForm" class="p-5 md:p-6 space-y-4">
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+            <div class="md:col-span-3">
+              <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">วันที่รับเอกสาร <span class="text-red-600">*</span></label>
+              <input type="date" id="ledgerDateInput" required
+                class="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-2 text-sm font-semibold text-slate-800 dark:text-slate-100 focus:outline-none focus:border-blue-800">
+            </div>
+
+            <div class="md:col-span-9">
+              <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">ชื่อเรื่อง / รายการแฟ้มเอกสาร / ส่งถึงเจ้าพนักงานคนใด <span class="text-red-600">*</span></label>
+              <input type="text" id="ledgerBookTitle" required placeholder="เช่น แฟ้มขออนุมัติเบิกจ่าย (ส่งถึงเจ้าพนักงานพัสดุ), หนังสือเวียนสัสดี..."
+                class="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-3.5 py-2 text-sm text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:border-blue-800">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
+            <div class="bg-blue-50/60 dark:bg-slate-950 border border-blue-200 dark:border-slate-800 rounded-lg p-3">
+              <label class="block text-xs font-bold text-blue-950 dark:text-blue-300 mb-1">📥 เอกสารเข้ามา (กี่เล่ม)</label>
+              <input type="number" id="ledgerQtyInput" min="1" value="1" required
+                class="w-full bg-white dark:bg-slate-900 border border-blue-300 dark:border-slate-700 rounded px-3 py-1.5 text-base font-bold text-blue-950 dark:text-white focus:outline-none">
+            </div>
+
+            <div class="bg-indigo-50/60 dark:bg-slate-950 border border-indigo-200 dark:border-slate-800 rounded-lg p-3">
+              <label class="block text-xs font-bold text-indigo-950 dark:text-indigo-300 mb-1">✍️ เซ็นแล้ว (กี่เล่ม)</label>
+              <input type="number" id="ledgerSignedInput" min="0" value="0" required
+                class="w-full bg-white dark:bg-slate-900 border border-indigo-300 dark:border-slate-700 rounded px-3 py-1.5 text-base font-bold text-indigo-700 dark:text-indigo-400 focus:outline-none">
+            </div>
+
+            <div class="bg-emerald-50/60 dark:bg-slate-950 border border-emerald-200 dark:border-slate-800 rounded-lg p-3">
+              <label class="block text-xs font-bold text-emerald-950 dark:text-emerald-300 mb-1">🤝 ถึงมือเจ้าพนักงานแล้ว (กี่เล่ม)</label>
+              <input type="number" id="ledgerDeliveredInput" min="0" value="0" required
+                class="w-full bg-white dark:bg-slate-900 border border-emerald-300 dark:border-slate-700 rounded px-3 py-1.5 text-base font-bold text-emerald-700 dark:text-emerald-400 focus:outline-none">
+            </div>
+          </div>
+
+          <div class="flex justify-end pt-2 border-t border-slate-100 dark:border-slate-800">
+            <button type="submit" id="ledgerSubmitBtn"
+              class="w-full sm:w-auto bg-emerald-700 hover:bg-emerald-600 disabled:bg-slate-400 text-white font-bold px-6 py-2.5 rounded-lg text-sm transition shadow-sm">
+              + บันทึกรายการลงสมุดคุมวันนี้
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- แถบเลือกวันที่สรุปยอด + การ์ดสรุป 4 ช่อง -->
+      <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+        <div>
+          <h3 class="font-bold text-blue-950 dark:text-slate-100 text-base">📊 สรุปยอดเอกสารเข้า - ออก</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400">ยอดรวมจำนวนเล่มตามวันที่เลือก</p>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <label for="trackDateFilter" class="text-xs font-semibold text-slate-600 dark:text-slate-300">เลือกวันที่:</label>
+          <input type="date" id="trackDateFilter" onchange="renderTrackingPage()"
+            class="bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-1.5 text-xs font-bold text-blue-950 dark:text-amber-400 focus:outline-none">
+          <button type="button" onclick="resetTrackDateToday()"
+            class="bg-blue-900 dark:bg-amber-600 text-white text-xs font-semibold px-3 py-1.5 rounded-lg hover:bg-blue-800">
+            วันนี้
+          </button>
+          <button type="button" onclick="showAllTrackDates()"
+            class="bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-semibold px-3 py-1.5 rounded-lg hover:bg-slate-300">
+            ดูทั้งหมด
+          </button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-white dark:bg-slate-900 border-l-4 border-blue-800 border-y border-r border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-sm">
+          <div class="text-xs font-semibold text-slate-500 dark:text-slate-400">📥 เอกสารเข้ามาทั้งหมด</div>
+          <div class="mt-2 flex items-baseline gap-2">
+            <span id="statTotalIn" class="text-3xl font-bold text-blue-950 dark:text-white">0</span>
+            <span class="text-xs font-semibold text-slate-500">เล่ม</span>
+          </div>
+        </div>
+
+        <div class="bg-white dark:bg-slate-900 border-l-4 border-amber-500 border-y border-r border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-sm">
+          <div class="text-xs font-semibold text-slate-500 dark:text-slate-400">⏳ ค้างเซ็น / ยังไม่เซ็น</div>
+          <div class="mt-2 flex items-baseline gap-2">
+            <span id="statWaitingSign" class="text-3xl font-bold text-amber-600 dark:text-amber-400">0</span>
+            <span class="text-xs font-semibold text-slate-500">เล่ม</span>
+          </div>
+        </div>
+
+        <div class="bg-white dark:bg-slate-900 border-l-4 border-indigo-600 border-y border-r border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-sm">
+          <div class="text-xs font-semibold text-slate-500 dark:text-slate-400">✍️ เซ็นแล้ว</div>
+          <div class="mt-2 flex items-baseline gap-2">
+            <span id="statSigned" class="text-3xl font-bold text-indigo-700 dark:text-indigo-400">0</span>
+            <span class="text-xs font-semibold text-slate-500">เล่ม</span>
+          </div>
+        </div>
+
+        <div class="bg-white dark:bg-slate-900 border-l-4 border-emerald-600 border-y border-r border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-sm">
+          <div class="text-xs font-semibold text-slate-500 dark:text-slate-400">🤝 ถึงมือเจ้าพนักงานแล้ว</div>
+          <div class="mt-2 flex items-baseline gap-2">
+            <span id="statDelivered" class="text-3xl font-bold text-emerald-700 dark:text-emerald-400">0</span>
+            <span class="text-xs font-semibold text-slate-500">เล่ม</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ตารางรายการบันทึกของหน้า 2 -->
+      <section class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-sm overflow-hidden">
+        <div class="bg-slate-50 dark:bg-slate-800/60 px-5 py-3.5 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center">
+          <h3 class="font-bold text-blue-950 dark:text-slate-100 text-sm">รายการบันทึกประจำวัน (กดอัปเดตสถานะเซ็น / ส่งเจ้าพนักงานได้ทันที)</h3>
+          <button onclick="loadAllData()" class="text-xs font-semibold bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 px-3 py-1.5 rounded-lg hover:bg-slate-100">
+            🔄 รีเฟรช
+          </button>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-sm border-collapse">
+            <thead class="bg-blue-950 dark:bg-slate-950 text-white dark:text-slate-300 text-xs font-semibold tracking-wider">
+              <tr>
+                <th class="py-3 px-4 border-b border-blue-900 dark:border-slate-800">วันที่ / เวลา</th>
+                <th class="py-3 px-4 border-b border-blue-900 dark:border-slate-800">รายการเล่มเอกสาร / ผู้บันทึก</th>
+                <th class="py-3 px-4 border-b border-blue-900 dark:border-slate-800 text-center">เข้า (เล่ม)</th>
+                <th class="py-3 px-4 border-b border-blue-900 dark:border-slate-800 text-center">เซ็นแล้ว</th>
+                <th class="py-3 px-4 border-b border-blue-900 dark:border-slate-800 text-center">ถึงมือเจ้าพนักงาน</th>
+                <th class="py-3 px-4 border-b border-blue-900 dark:border-slate-800 text-right">ปรับสถานะ / ลบ</th>
+              </tr>
+            </thead>
+            <tbody id="trackDocList" class="divide-y divide-slate-200 dark:divide-slate-800">
+              <tr><td colspan="6" class="p-8 text-center text-slate-500">กำลังโหลดข้อมูล...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
   </div>
 
   <script>
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyZ2qufQMpBPMCyxTM9MHzBaU-dPS2_sjV2GVT6aUqLc1E5KfivNFyt4ri21FSQbhs1fg/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz2sQ7QtKUUGkzl0zMf3UNtgGoCufQxTR9yITN5nBb5YF9lt6EhvDGqXFgyMaz97SK-WA/exec';
     let allDocuments = [];
     let allUsers = [];
+    let allLedger = [];
     let currentUser = null;
     let currentFilterTab = 'mine';
     let lastKnownPendingIds = new Set();
@@ -301,6 +457,10 @@
         updateThemeButton(true);
       }
 
+      const today = getTodayISODate();
+      document.getElementById('ledgerDateInput').value = today;
+      document.getElementById('trackDateFilter').value = today;
+
       const saved = JSON.parse(localStorage.getItem('docdrop_categories') || 'null');
       renderCategoryOptions(saved || [...DEFAULT_CATEGORIES]);
 
@@ -308,6 +468,35 @@
       if (savedSession && savedSession.username && savedSession.password) {
         currentUser = savedSession;
         showAppScreen();
+      }
+    }
+
+    function getTodayISODate() {
+      const now = new Date();
+      const offset = now.getTimezoneOffset() * 60000;
+      return new Date(now - offset).toISOString().split('T')[0];
+    }
+
+    function switchMainPage(pageId) {
+      const pageSend = document.getElementById('pageSend');
+      const pageTrack = document.getElementById('pageTrack');
+      const navSend = document.getElementById('navPageSend');
+      const navTrack = document.getElementById('navPageTrack');
+
+      const activeClass = 'px-4 py-2 rounded-lg text-xs md:text-sm font-bold transition flex items-center gap-2 bg-amber-500 text-blue-950 shadow-sm';
+      const inactiveClass = 'px-4 py-2 rounded-lg text-xs md:text-sm font-bold transition flex items-center gap-2 bg-blue-900/80 dark:bg-slate-800 text-blue-100 hover:bg-blue-800 border border-blue-800 dark:border-slate-700';
+
+      if (pageId === 'pageSend') {
+        pageSend.classList.remove('hidden');
+        pageTrack.classList.add('hidden');
+        navSend.className = activeClass;
+        navTrack.className = inactiveClass;
+      } else {
+        pageSend.classList.add('hidden');
+        pageTrack.classList.remove('hidden');
+        navTrack.className = activeClass;
+        navSend.className = inactiveClass;
+        renderTrackingPage();
       }
     }
 
@@ -330,7 +519,6 @@
       }
     }
 
-    // เข้าสู่ระบบ
     document.getElementById('loginForm').addEventListener('submit', async function(e) {
       e.preventDefault();
       const username = document.getElementById('loginUsername').value.trim();
@@ -361,7 +549,6 @@
       }
     });
 
-    // ลงทะเบียนเจ้าหน้าที่ใหม่
     document.getElementById('registerForm').addEventListener('submit', async function(e) {
       e.preventDefault();
       const officePin = document.getElementById('regOfficePin').value.trim();
@@ -380,12 +567,7 @@
           method: 'POST',
           body: JSON.stringify({
             action: 'register',
-            officePin,
-            fullName,
-            department,
-            email,
-            username,
-            password
+            officePin, fullName, department, email, username, password
           })
         });
         const result = await res.json();
@@ -415,8 +597,8 @@
         ? `${currentUser.fullName} (${currentUser.department})`
         : currentUser.fullName;
 
-      loadDocuments(true);
-      setInterval(() => loadDocuments(false), 45000);
+      loadAllData(true);
+      setInterval(() => loadAllData(false), 45000);
     }
 
     function logout() {
@@ -502,23 +684,25 @@
       return (myName && target.includes(myName)) || (myDept && target.includes(myDept));
     }
 
-    async function loadDocuments(isFirstLoad = false) {
+    async function loadAllData(isFirstLoad = false) {
       const refreshBtn = document.getElementById('refreshBtn');
-      refreshBtn.innerText = 'กำลังโหลด...';
+      if (refreshBtn) refreshBtn.innerText = 'กำลังโหลด...';
 
       try {
         const res = await fetch(SCRIPT_URL);
         const json = await res.json();
         allDocuments = json.data || [];
         allUsers = json.users || [];
+        allLedger = json.ledger || [];
 
         populateRecipientDropdown(allUsers);
         checkIncomingNotifications(isFirstLoad);
         renderTable();
+        renderTrackingPage();
       } catch (err) {
         document.getElementById('docList').innerHTML = '<tr><td colspan="5" class="p-8 text-center text-red-600">ไม่สามารถโหลดข้อมูลได้</td></tr>';
       } finally {
-        refreshBtn.innerText = 'ปรับปรุงข้อมูล';
+        if (refreshBtn) refreshBtn.innerText = 'ปรับปรุงข้อมูล';
       }
     }
 
@@ -571,6 +755,21 @@
       return `<span class="inline-block bg-orange-100 dark:bg-orange-950/70 text-orange-800 dark:text-orange-300 border border-orange-300 text-xs px-2 py-0.5 rounded mr-1.5 font-bold">ด่วน</span>`;
     }
 
+    function formatTitleHTML(rawTitle) {
+      const str = String(rawTitle || '');
+      const matchDual = str.match(/^\[(ปกติ|ด่วน|ด่วนมาก|ด่วนที่สุด)\]\s*\[(.*?)\]\s*(.*)$/);
+      const matchSingle = str.match(/^\[(.*?)\]\s*(.*)$/);
+
+      if (matchDual) {
+        return `${getUrgencyBadgeHTML(matchDual[1])}<span class="inline-block bg-blue-50 dark:bg-blue-950 text-blue-900 dark:text-blue-200 border border-blue-200 dark:border-blue-800 text-xs px-2 py-0.5 rounded mr-1.5 font-semibold">${escapeHTML(matchDual[2])}</span><span class="font-medium">${escapeHTML(matchDual[3])}</span>`;
+      }
+      if (matchSingle) {
+        return `<span class="inline-block bg-blue-50 dark:bg-blue-950 text-blue-900 dark:text-blue-200 border border-blue-200 dark:border-blue-800 text-xs px-2 py-0.5 rounded mr-1.5 font-semibold">${escapeHTML(matchSingle[1])}</span><span class="font-medium">${escapeHTML(matchSingle[2])}</span>`;
+      }
+      return `<span class="font-medium">${escapeHTML(str)}</span>`;
+    }
+
+    // ตารางหน้า 1
     function renderTable() {
       const tbody = document.getElementById('docList');
       const keyword = document.getElementById('searchInput').value.toLowerCase().trim();
@@ -593,21 +792,7 @@
       }
 
       tbody.innerHTML = filtered.map(item => {
-        const rawTitle = String(item.title || '');
-        const matchDual = rawTitle.match(/^\[(ปกติ|ด่วน|ด่วนมาก|ด่วนที่สุด)\]\s*\[(.*?)\]\s*(.*)$/);
-        const matchSingle = rawTitle.match(/^\[(.*?)\]\s*(.*)$/);
-
-        let titleHTML = '';
-        if (matchDual) {
-          titleHTML = `${getUrgencyBadgeHTML(matchDual[1])}<span class="inline-block bg-blue-50 dark:bg-blue-950 text-blue-900 dark:text-blue-200 border border-blue-200 dark:border-blue-800 text-xs px-2 py-0.5 rounded mr-1.5 font-semibold">${escapeHTML(matchDual[2])}</span><span class="font-medium">${escapeHTML(matchDual[3])}</span>`;
-        } else if (matchSingle) {
-          titleHTML = `<span class="inline-block bg-blue-50 dark:bg-blue-950 text-blue-900 dark:text-blue-200 border border-blue-200 dark:border-blue-800 text-xs px-2 py-0.5 rounded mr-1.5 font-semibold">${escapeHTML(matchSingle[1])}</span><span class="font-medium">${escapeHTML(matchSingle[2])}</span>`;
-        } else {
-          titleHTML = `<span class="font-medium">${escapeHTML(rawTitle)}</span>`;
-        }
-
         const isReceived = item.status === 'รับเรื่องแล้ว';
-
         return `
           <tr class="hover:bg-slate-50/90 dark:hover:bg-slate-800/40 transition">
             <td class="py-3.5 px-4 text-xs text-slate-600 dark:text-slate-400 whitespace-nowrap">${escapeHTML(formatThaiDateTime(item.timestamp))}</td>
@@ -617,7 +802,7 @@
               <span class="text-blue-900 dark:text-amber-400 font-bold">${escapeHTML(item.department)}</span>
             </td>
             <td class="py-3.5 px-4">
-              <div class="mb-1 flex flex-wrap items-center gap-y-1">${titleHTML}</div>
+              <div class="mb-1 flex flex-wrap items-center gap-y-1">${formatTitleHTML(item.title)}</div>
               <a href="${item.fileUrl}" target="_blank" rel="noopener noreferrer"
                 class="inline-flex items-center gap-1 text-xs font-medium text-blue-700 dark:text-sky-400 hover:underline">
                 📄 เปิดดูเอกสาร: ${escapeHTML(item.fileName)}
@@ -641,6 +826,231 @@
       }).join('');
     }
 
+    // =========================================================================
+    // ฟังก์ชันหน้า 2: บันทึกคุมยอดรายวัน (DailyLedger แยกอิสระ)
+    // =========================================================================
+    function normalizeLedgerDate(raw) {
+      const str = String(raw || '').trim();
+      if (/^\d{4}-\d{2}-\d{2}$/.test(str)) return str;
+      if (str.includes('T')) {
+        const d = new Date(str);
+        if (!isNaN(d)) {
+          const offset = d.getTimezoneOffset() * 60000;
+          return new Date(d - offset).toISOString().split('T')[0];
+        }
+      }
+      return str;
+    }
+
+    function formatDisplayThaiDate(isoDate) {
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(isoDate)) return isoDate;
+      const [y, m, d] = isoDate.split('-');
+      const months = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'];
+      return `${parseInt(d, 10)} ${months[parseInt(m, 10) - 1]} ${parseInt(y, 10) + 543}`;
+    }
+
+    function resetTrackDateToday() {
+      document.getElementById('trackDateFilter').value = getTodayISODate();
+      renderTrackingPage();
+    }
+
+    function showAllTrackDates() {
+      document.getElementById('trackDateFilter').value = '';
+      renderTrackingPage();
+    }
+
+    function renderTrackingPage() {
+      const selectedDate = document.getElementById('trackDateFilter').value;
+
+      const filteredLedger = selectedDate
+        ? allLedger.filter(item => normalizeLedgerDate(item.date) === selectedDate)
+        : allLedger;
+
+      let totalIn = 0;
+      let totalSigned = 0;
+      let totalDelivered = 0;
+
+      filteredLedger.forEach(item => {
+        totalIn += Number(item.quantity) || 0;
+        totalSigned += Number(item.signedCount) || 0;
+        totalDelivered += Number(item.deliveredCount) || 0;
+      });
+
+      const waitingSign = Math.max(0, totalIn - totalSigned);
+
+      document.getElementById('statTotalIn').innerText = totalIn;
+      document.getElementById('statWaitingSign').innerText = waitingSign;
+      document.getElementById('statSigned').innerText = totalSigned;
+      document.getElementById('statDelivered').innerText = totalDelivered;
+
+      const tbody = document.getElementById('trackDocList');
+      if (filteredLedger.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-slate-500 dark:text-slate-400">ยังไม่มีรายการบันทึกในวันที่เลือก สามารถกรอกบันทึกด้านบนได้เลยครับ</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = filteredLedger.map(item => {
+        const dStr = normalizeLedgerDate(item.date);
+        const qty = Number(item.quantity) || 1;
+        const signed = Number(item.signedCount) || 0;
+        const delivered = Number(item.deliveredCount) || 0;
+        const isAllSigned = signed >= qty;
+        const isAllDelivered = delivered >= qty;
+
+        return `
+          <tr class="hover:bg-slate-50/90 dark:hover:bg-slate-800/40 transition">
+            <td class="py-3.5 px-4 text-xs text-slate-600 dark:text-slate-400 whitespace-nowrap">
+              <div class="font-bold text-slate-800 dark:text-slate-200">${escapeHTML(formatDisplayThaiDate(dStr))}</div>
+              <div>เวลา ${escapeHTML(item.timestamp || '-')} น.</div>
+            </td>
+            <td class="py-3.5 px-4">
+              <div class="font-bold text-slate-800 dark:text-slate-100">${escapeHTML(item.bookTitle)}</div>
+              <div class="text-xs text-slate-500">ผู้บันทึก: ${escapeHTML(item.recorder)}</div>
+            </td>
+            <td class="py-3.5 px-4 text-center whitespace-nowrap">
+              <span class="px-2.5 py-1 rounded-md text-xs font-bold bg-blue-50 dark:bg-blue-950 text-blue-900 dark:text-blue-200 border border-blue-200 dark:border-blue-800">
+                ${qty} เล่ม
+              </span>
+            </td>
+            <td class="py-3.5 px-4 text-center whitespace-nowrap">
+              <span class="px-2.5 py-1 rounded-md text-xs font-bold ${
+                isAllSigned
+                  ? 'bg-indigo-100 dark:bg-indigo-950 text-indigo-800 dark:text-indigo-300 border border-indigo-300'
+                  : 'bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-amber-300'
+              }">
+                ${signed} / ${qty} เล่ม
+              </span>
+            </td>
+            <td class="py-3.5 px-4 text-center whitespace-nowrap">
+              <span class="px-2.5 py-1 rounded-md text-xs font-bold ${
+                isAllDelivered
+                  ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300'
+                  : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-300 dark:border-slate-700'
+              }">
+                ${delivered} / ${qty} เล่ม
+              </span>
+            </td>
+            <td class="py-3.5 px-4 text-right whitespace-nowrap space-x-1.5">
+              ${!isAllSigned
+                ? `<button onclick="updateLedgerEntry(${item.rowId}, ${qty}, ${delivered}, this)" class="bg-indigo-700 hover:bg-indigo-600 text-white text-xs font-bold px-2.5 py-1.5 rounded-lg transition">✍️ เซ็นครบแล้ว</button>`
+                : ''
+              }
+              ${!isAllDelivered
+                ? `<button onclick="updateLedgerEntry(${item.rowId}, ${Math.max(signed, qty)}, ${qty}, this)" class="bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-bold px-2.5 py-1.5 rounded-lg transition">🤝 ถึงมือเจ้าพนักงาน</button>`
+                : `<span class="text-xs font-bold text-emerald-700 dark:text-emerald-400 mr-1">✅ เรียบร้อย</span>`
+              }
+              <button onclick="deleteLedgerEntry(${item.rowId}, this)" title="ลบรายการนี้" class="text-xs text-rose-600 hover:text-rose-800 px-2 py-1.5 rounded hover:bg-rose-50 dark:hover:bg-rose-950/40">
+                ลบ
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    // บันทึกข้อมูลใหม่ลงหน้า 2
+    document.getElementById('ledgerForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const date = document.getElementById('ledgerDateInput').value;
+      const bookTitle = document.getElementById('ledgerBookTitle').value.trim();
+      const quantity = Number(document.getElementById('ledgerQtyInput').value) || 1;
+      const signedCount = Number(document.getElementById('ledgerSignedInput').value) || 0;
+      const deliveredCount = Number(document.getElementById('ledgerDeliveredInput').value) || 0;
+
+      if (signedCount > quantity || deliveredCount > quantity) {
+        alert('จำนวนเล่มที่เซ็นแล้ว หรือถึงมือเจ้าพนักงาน ต้องไม่เกินจำนวนเอกสารที่เข้ามาครับ');
+        return;
+      }
+
+      const btn = document.getElementById('ledgerSubmitBtn');
+      btn.disabled = true;
+      btn.innerText = 'กำลังบันทึก...';
+
+      try {
+        const res = await fetch(SCRIPT_URL, {
+          method: 'POST',
+          body: JSON.stringify({
+            action: 'addLedger',
+            username: currentUser.username,
+            password: currentUser.password,
+            date,
+            bookTitle,
+            quantity,
+            signedCount,
+            deliveredCount,
+            recorder: currentUser.fullName
+          })
+        });
+        const result = await res.json();
+        if (result.status === 'success') {
+          document.getElementById('ledgerBookTitle').value = '';
+          document.getElementById('ledgerQtyInput').value = 1;
+          document.getElementById('ledgerSignedInput').value = 0;
+          document.getElementById('ledgerDeliveredInput').value = 0;
+          document.getElementById('trackDateFilter').value = date;
+          await loadAllData(false);
+        } else {
+          alert('เกิดข้อผิดพลาด: ' + result.message);
+        }
+      } catch (err) {
+        alert('ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้');
+      } finally {
+        btn.disabled = false;
+        btn.innerText = '+ บันทึกรายการลงสมุดคุมวันนี้';
+      }
+    });
+
+    async function updateLedgerEntry(rowId, signedCount, deliveredCount, btnElement) {
+      btnElement.disabled = true;
+      btnElement.innerText = '...';
+      try {
+        const res = await fetch(SCRIPT_URL, {
+          method: 'POST',
+          body: JSON.stringify({
+            action: 'updateLedger',
+            username: currentUser.username,
+            password: currentUser.password,
+            rowId,
+            signedCount,
+            deliveredCount
+          })
+        });
+        const result = await res.json();
+        if (result.status === 'success') {
+          await loadAllData(false);
+        } else {
+          alert(result.message);
+        }
+      } catch (err) {
+        alert('เกิดข้อผิดพลาด');
+      }
+    }
+
+    async function deleteLedgerEntry(rowId, btnElement) {
+      if (!confirm('ยืนยันลบรายการบันทึกนี้ออกจากสมุดคุม?')) return;
+      btnElement.disabled = true;
+      try {
+        const res = await fetch(SCRIPT_URL, {
+          method: 'POST',
+          body: JSON.stringify({
+            action: 'deleteLedger',
+            username: currentUser.username,
+            password: currentUser.password,
+            rowId
+          })
+        });
+        const result = await res.json();
+        if (result.status === 'success') {
+          await loadAllData(false);
+        } else {
+          alert(result.message);
+        }
+      } catch (err) {
+        alert('เกิดข้อผิดพลาด');
+      }
+    }
+
+    // ส่งหนังสือหน้า 1
     document.getElementById('uploadForm').addEventListener('submit', function(e) {
       e.preventDefault();
       const file = document.getElementById('fileInput').files[0];
@@ -684,7 +1094,7 @@
           if (result.status === 'success') {
             document.getElementById('titleDetail').value = '';
             document.getElementById('fileInput').value = '';
-            await loadDocuments(false);
+            await loadAllData(false);
             alert('ส่งหนังสือและแจ้งเตือนไปยังผู้รับเรียบร้อยแล้ว');
           } else {
             alert('เกิดข้อผิดพลาด: ' + result.message);
@@ -702,7 +1112,6 @@
     async function markReceived(rowId, btnElement) {
       btnElement.disabled = true;
       btnElement.innerText = 'กำลังลงรับ...';
-
       try {
         const res = await fetch(SCRIPT_URL, {
           method: 'POST',
@@ -716,7 +1125,7 @@
         });
         const result = await res.json();
         if (result.status === 'success') {
-          await loadDocuments(false);
+          await loadAllData(false);
         } else {
           alert(result.message);
           btnElement.disabled = false;
